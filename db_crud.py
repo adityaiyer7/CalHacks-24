@@ -221,3 +221,49 @@ def update_sleep(baby_id, sleep_duration):
 
     except Error as e:
         print(f"Error: {e}")
+
+
+
+def extract_baby_id_from_name(user_id, baby_name):
+
+    try:
+        # Establish a connection to SingleStore
+        connection = mysql.connector.connect(
+            host=host,
+            port=port,
+            user=username,
+            password=password,
+            database=database
+        )
+
+        if connection.is_connected():
+            print("Connected to SingleStore database")
+
+            # Create a new cursor
+            cursor = connection.cursor()
+            # Define the query to get the baby_id based on parent_id (user_id) and baby_name
+            get_baby_id_query = '''
+                SELECT baby_id 
+                FROM baby 
+                WHERE user_id = %s AND name = %s;
+            '''
+
+            
+            parent_id = user_id  
+            
+
+            # Execute the query
+            cursor.execute(get_baby_id_query, (parent_id, baby_name))
+
+            # Fetch the result
+            result = cursor.fetchone()
+
+            if result:
+                baby_id = result[0]  # Retrieve the baby_id from the result
+                print(f"Baby ID for {baby_name} is {baby_id}")
+            else:
+                print(f"No baby found with name {baby_name} for user_id {parent_id}")
+
+
+    except Error as e:
+        print(f"Error: {e}")
