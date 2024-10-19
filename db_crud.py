@@ -3,6 +3,7 @@ import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 # Load environment variables from .env file
 load_dotenv() 
@@ -17,8 +18,7 @@ password = os.getenv("PASSWORD")
 database = os.getenv("DATABASE")
 
 
-def update_user(username, user_email):
-
+def update_user(new_username, user_email):
     try:
         # Establish a connection to SingleStore
         connection = mysql.connector.connect(
@@ -34,26 +34,33 @@ def update_user(username, user_email):
 
             # Create a new cursor
             cursor = connection.cursor()
-            insert_user_query = '''
-                INSERT INTO users (username, email)
-                VALUES (%s, %s);
+
+            # Check if the email already exists in the database
+            check_email_query = '''
+                SELECT user_id FROM users WHERE email = %s;
             '''
+            cursor.execute(check_email_query, (user_email,))
+            result = cursor.fetchone()
 
-            # Values to insert (e.g., user's name and email)
-            user_data = (username, user_email)
+            # If email does not exist, insert the new user
+            if result is None:
+                insert_user_query = '''
+                    INSERT INTO users (username, email)
+                    VALUES (%s, %s);
+                '''
+                user_data = (new_username, user_email)
+                cursor.execute(insert_user_query, user_data)
 
-            # Execute the query
-            cursor.execute(insert_user_query, user_data)
+                # Commit the changes
+                connection.commit()
 
-            # Commit the changes
-            connection.commit()
+                # Retrieve the newly inserted user_id
+                user_id = cursor.lastrowid
+                print(f"New user added with user_id: {user_id}")
+            else:
+                print(f"Email {user_email} already exists with user_id: {result[0]}")
 
-            # Retrieve the newly inserted user_id
-            user_id = cursor.lastrowid
-            print(f"New user added with user_id: {user_id}")
-
-                # Commit changes
-            connection.commit()
+            cursor.close()
 
     except Error as e:
         print(f"Error: {e}")
@@ -248,7 +255,7 @@ def extract_baby_id_from_name(user_id, baby_name):
                 WHERE user_id = %s AND name = %s;
             '''
 
-            
+            # Variables holding the parent (user) ID and baby's name
             parent_id = user_id  
             
 
@@ -267,3 +274,61 @@ def extract_baby_id_from_name(user_id, baby_name):
 
     except Error as e:
         print(f"Error: {e}")
+
+def get_user_id_by_email(email):
+    try:
+        # Establish a connection to SingleStore
+        connection = mysql.connector.connect(
+            host=host,
+            port=port,
+            user=username,
+            password=password,
+            database=database
+        )
+
+        if connection.is_connected():
+            print("Connected to SingleStore database")
+
+            # Create a new cursor
+            cursor = connection.cursor()
+
+            # Query to get user_id by email
+            get_user_id_query = '''
+                SELECT user_id FROM users WHERE email = %s;
+            '''
+
+            # Execute the query with the given email
+            cursor.execute(get_user_id_query, (email,))
+
+            # Fetch the result
+            result = cursor.fetchone()
+
+            if result:
+                user_id = result[0]  # Get the user_id from the result
+                return user_id
+            else:
+                print(f"No user found with email {email}")
+                return None
+
+    except Error as e:
+        print(f"Error: {e}")
+
+
+
+# adding a sample user
+new_username = "Batman"
+user_email = "batman@gothamcity.com"
+update_user(new_username, user_email)
+
+
+
+
+parent_user_id = get_user_id_by_email(user_email)
+print(parent_user_id)
+baby_name = 'Elon'
+dob ='2002-11-05'
+dob = datetime.strptime(dob, "%Y-%m-%d")
+
+update_baby(parent_user_id, baby_name, dob)
+
+# update_user("batman", "iambatman@example.com")

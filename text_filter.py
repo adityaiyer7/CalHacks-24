@@ -39,7 +39,7 @@ def post_processing(output):
         return ast.literal_eval(output)
     else:
         match = re.search(r'\{.*?\}', output)
-        return ast.literal_eval(match)
+        return ast.literal_eval(match.group(0))
 
 
 '''This returns the height value from the dictionary. Will be used to store in DB'''
