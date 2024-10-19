@@ -6,3 +6,4 @@ python-multipart
 deepgram-sdk
 fastapi
 uvicorn
+requests

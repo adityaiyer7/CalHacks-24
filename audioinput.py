@@ -10,19 +10,19 @@ import uvicorn
 
 load_dotenv()
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
-FILE_PATH = "tempaudio/test.wav"
+FILE_PATH = "tempaudio/Record (online-voice-recorder.com).wav"
 
 app = FastAPI()
 
 @app.post("/transcribe")
 def transcribe():
+   print("I entered here")
    # Define the URL and headers
    url = "https://api.deepgram.com/v1/listen"
    headers = {
       "Authorization": f"Token {DEEPGRAM_API_KEY}",
       "Content-Type": "audio/wav"
    }
-
    # Open and send the audio file
    with open(FILE_PATH, "rb") as audio_file:
       response = requests.post(url, headers=headers, data=audio_file)
@@ -34,5 +34,5 @@ def transcribe():
    return transcription, creation_time_stamp
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="127.0.0.1", port=8000)
