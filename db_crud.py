@@ -313,13 +313,57 @@ def get_user_id_by_email(email):
     except Error as e:
         print(f"Error: {e}")
 
+def get_baby_ids_by_user_id(user_id):
+    try:
+        # Establish a connection to SingleStore
+        connection = mysql.connector.connect(
+            host=host,
+            port=port,
+            user=username,
+            password=password,
+            database=database
+        )
+
+        if connection.is_connected():
+            print("Connected to SingleStore database")
+
+            # Create a new cursor
+            cursor = connection.cursor()
+
+            # Define the SQL query to fetch all baby_id's for the given user_id
+            fetch_baby_ids_query = '''
+            SELECT baby_id FROM baby WHERE user_id = %s;
+            '''
+
+            # Execute the query with the given user_id
+            cursor.execute(fetch_baby_ids_query, (user_id,))
+
+            # Fetch all baby_id's for the user
+            baby_ids = cursor.fetchall()
+
+            # Extract baby_id values from the fetched results
+            baby_id_list = [baby_id[0] for baby_id in baby_ids]
+
+            return baby_id_list
+
+    except Error as e:
+        print(f"Error: {e}")
+        return []
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
 
 
 # adding a sample user
 new_username = "Batman"
 user_email = "batman@gothamcity.com"
 update_user(new_username, user_email)
-
+update_user(new_username, user_email)
 
 
 

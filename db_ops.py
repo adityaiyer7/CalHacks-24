@@ -111,8 +111,4 @@ try:
 
 except Error as e:
     print(f"Error: {e}")
-# finally:
-#     if connection.is_connected():
-#         cursor.close()
-#         connection.close()
-#         print("MySQL connection is closed")
+

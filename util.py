@@ -74,7 +74,7 @@ def drop_table(table_name):
         print(f"Error: {e}")
 
 # Usage example
-drop_table('weight')
+drop_table('users')
 
 
 

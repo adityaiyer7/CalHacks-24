@@ -16,12 +16,13 @@ def extract_parameters(input_text):
 
     prompt = f'''
     You're given some input text. Your job is to extract the following from the input text and return it as a dictionary:
-    1. Height. 
-    2. Weight. 
+    1. height. 
+    2. weight. 
+    3. sleep. 
     Remove all units, I only want the corresponding number. If you don't find these parameters, mark their value as 0.  
 
     Here is the input text: {input_text}. 
-    Remember, the return format should be open curly braces: height: value, weight: value close curly braces. Don't add anything before or after the curly braces. 
+    Remember, the return format should be open curly braces: height: value, weight: value, sleep: value close curly braces. Don't add anything before or after the curly braces. 
     '''
 
     model = genai.GenerativeModel("gemini-1.5-flash")
