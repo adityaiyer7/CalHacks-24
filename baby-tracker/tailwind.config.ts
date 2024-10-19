@@ -11,9 +11,13 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        strongText: "var(--strong-text)",
+        gradientPrimary: "var(--gradient-primary)",
+        gradientSecondary: "var(--gradient-secondary)",
       },
     },
   },
   plugins: [],
 };
+
 export default config;
