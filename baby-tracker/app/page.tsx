@@ -1,19 +1,11 @@
 "use client";
-import React, { useState } from "react";
-// import Dictaphone from "./Dictaphone";
-// import 'regenerator-runtime/runtime';
-import AudioRecorder from "./components/AudioRecorder";
-import Navbar from "./components/Navbar";
+import React from "react";
+import Dashboard from "./dashboard/page";
 
-export default function Home() {
- 
-
+export default function LandingPage() {
   return (
-    <div className="flex flex-row justify-start items-center overflow-y-auto md:pb-0 pb-32">
-      <div className="flex ">
-
-      </div>
-      <Navbar />
-    </div>
+    <>
+      <Dashboard />
+    </>
   );
 }
