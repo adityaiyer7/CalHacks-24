@@ -12,6 +12,6 @@ def api_caller():
 transcription, creation_date = api_caller()
 print(transcription)
 gemini_output = extract_parameters(transcription)
-
+processed_gemini_output = post_processing(gemini_output)
 print(gemini_output)
 
