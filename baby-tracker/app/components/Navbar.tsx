@@ -1,14 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
+import { AIVoiceChatBotProps } from '../types';
 
-//TODO: ADJUST ICON SIZES
-
-const Navbar = () => {
+const Navbar = ({handleAIBotClick}: AIVoiceChatBotProps) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
-
     return (
         <div className={`${isExpanded ? 'md:w-44 w-16' : 'w-16 md:w-24'} flex flex-col justify-between items-center bg-gradient-to-r from-gradientPrimary to-gradientSecondary p-4 h-screen rounded-r-lg`}>
-            <div className={`flex flex-row justify-end items-center ${isExpanded ? 'ml-auto' : ''}`}>
+            <div className={`flex flex-row justify-end items-center ${isExpanded ? 'ml-auto' : ''} hover:animate-wiggle`}>
                 {/*Collapse/Expand Icons*/}
                 {isExpanded ? (
                     <div className='rounded-full hover:opacity-70 hover:cursor-pointer shadow-lg p-2 hidden md:block'>
@@ -37,39 +35,82 @@ const Navbar = () => {
             <div className="text-center mb-3">
                 <img src="https://via.placeholder.com/250" alt="profile picture" className="rounded-full w-32 h-32 mx-auto" />
                 {isExpanded && (
-                    <p className="mt-2 text-strongText hidden md:block">
+                    <a className="mt-2 text-strongText hidden md:block">
                         Baby Name
-                    </p>
+                    </a>
                 )}
             </div>
 
             {/* Nav List */}
-            <div>
-                <ul className='w-11/12 h-auto'>
-                    <li className='flex flex-row justify-evenly items-center hover:opacity-70 hover:cursor-pointer rounded-full shadow-lg p-2 my-3'>
-                        <Image src="/images/home.png" alt="Home Icon" width={30} height={30} />
-                        {isExpanded && <p className='px-2 hidden md:block text-lg font-semibold'>Home</p>}
+            <div className="flex flex-col justify-center items-center">
+                <ul className="w-11/12 h-auto">
+                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
+                        <div className="w-8 h-8">
+                            <Image
+                                src="/images/home.png"
+                                alt="Home Icon"
+                                className="w-full h-full object-contain" // Ensure the aspect ratio is maintained
+                                width={30}
+                                height={30}
+                            />
+                        </div>
+                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Home</a>}
                     </li>
-                    <li className='flex flex-row justify-evenly items-center hover:opacity-70 hover:cursor-pointer rounded-full shadow-lg p-2 my-3'>
-                        <Image src="/images/baby.png" alt="Profile Icon" width={30} height={30} />
-                        {isExpanded && <p className='px-2 hidden md:block text-lg font-semibold'>Profile</p>}
+                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
+                        <div className="w-8 h-8">
+                            <Image
+                                src="/images/baby.png"
+                                alt="Profile Icon"
+                                className="w-full h-full object-contain"
+                                width={30}
+                                height={30}
+                            />
+                        </div>
+                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Profile</a>}
                     </li>
-                    <li className='flex flex-row justify-evenly items-center hover:opacity-70 hover:cursor-pointer rounded-full shadow-lg p-2 my-3'>
-                        <Image src="/images/report.png" alt="Report Icon" width={30} height={30} />
-                        {isExpanded && <p className='px-2 hidden md:block text-lg font-semibold'>Report</p>}
+                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
+                        <div className="w-8 h-8">
+                            <Image
+                                src="/images/report.png"
+                                alt="Report Icon"
+                                className="w-full h-full object-contain"
+                                width={30}
+                                height={30}
+                            />
+                        </div>
+                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Report</a>}
                     </li>
-                    <li className='flex flex-row justify-evenly items-center hover:opacity-70 hover:cursor-pointer rounded-full shadow-lg p-2 my-3'>
-                        <Image src="/images/history.png" alt="History Icon" width={30} height={30} />
-                        {isExpanded && <p className='px-2 hidden md:block text-lg font-semibold'>History</p>}
+                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
+                        <div className="w-8 h-8">
+                            <Image
+                                src="/images/history.png"
+                                alt="History Icon"
+                                className="w-full h-full object-contain"
+                                width={30}
+                                height={30}
+                            />
+                        </div>
+                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">History</a>}
                     </li>
-                    <li className='flex flex-row justify-evenly items-center hover:opacity-70 hover:cursor-pointer rounded-full shadow-lg p-2 my-3'>
-                        <Image src="/images/settings.png" alt="Settings Icon" width={30} height={30} />
-                        {isExpanded && <p className=' hidden md:block text-lg font-semibold px-2'>Settings</p>}
+                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
+                        <div className="w-8 h-8">
+                            <Image
+                                src="/images/settings.png"
+                                alt="Settings Icon"
+                                className="w-full h-full object-contain"
+                                width={30}
+                                height={30}
+                            />
+                        </div>
+                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Settings</a>}
                     </li>
                 </ul>
             </div>
+
+
+
             {/* AI Widget */}
-            <div className='flex flex-row justify-center items-center rounded-full shadow-lg p-2 hover:cursor-pointer hover:opacity-70 animate-bounce'>
+            <div className='flex flex-row mb-5 md:mb-0 justify-center items-center rounded-full shadow-lg p-2 hover:cursor-pointer hover:opacity-70 hover:animate-bounce' onClick={handleAIBotClick}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={35} height={35} color={"#FFFFFF"} fill={"none"}>
                     <path d="M4 15.5C2.89543 15.5 2 14.6046 2 13.5C2 12.3954 2.89543 11.5 4 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M20 15.5C21.1046 15.5 22 14.6046 22 13.5C22 12.3954 21.1046 11.5 20 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

@@ -17,7 +17,7 @@ const TabSwitch = () => {
                 <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`text-white p-4 rounded shadow-md text-center flex items-center justify-center bg-gradient-to-r from-gradientPrimary to-gradientSecondary
+                    className={`text-white p-4 rounded shadow-md hover:animate-wiggle text-center flex items-center justify-center bg-gradient-to-r from-gradientPrimary to-gradientSecondary
                         ${activeTab === tab.id ? 'hover:focus:ring-emerald-500 ring-2  ring-offset-2' : ''}
                     `}
                 >
