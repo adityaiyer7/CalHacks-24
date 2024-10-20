@@ -66,6 +66,14 @@ def df_extractor(baby_id):
             WHERE DATE(log_date) = CURDATE();
             '''
 
+            sleep_last_7_days_query = '''
+            SELECT sleep_duration, log_date
+            FROM sleep
+            WHERE baby_id = %s
+            AND log_date >= CURDATE() - INTERVAL 7 DAY
+            ORDER BY log_date ASC;
+            '''
+
             # Load height data into a DataFrame
             df_height = pd.read_sql(height_query, connection, params=(baby_id,))
 
@@ -76,6 +84,8 @@ def df_extractor(baby_id):
 
             df_food =  pd.read_sql(food_query, connection)
 
+            df_sleep_week = pd.read_sql(sleep_last_7_days_query, connection, params=(baby_id,))
+
             # Display the DataFrames to check if they contain the correct data
             # print("Height DataFrame:")
             # print(df_height)
@@ -83,7 +93,7 @@ def df_extractor(baby_id):
             # print("Weight DataFrame:")
             #print(df_weight)
 
-            return [df_height, df_weight, df_sleep, df_food]
+            return [df_height, df_weight, df_sleep, df_food, df_sleep_week]
 
             # Close the connection
             # connection.close()
@@ -137,4 +147,46 @@ def food_graph_generator():
     os.makedirs(save_folder, exist_ok=True)
     save_path = os.path.join(save_folder, "food_graph.png")
     fig_food.write_image(save_path)
-    return {"message": f"Sleep graph saved at {save_path}"}
+    return {"message": f"Food graph saved at {save_path}"}
+
+
+@router.post("/generate_sleep_graph_weekly")
+def sleep_week_graph_generator():
+    # Extract data from the df_extractor function
+    df_lst = df_extractor(2251799813685249)
+    sleep_week_df = df_lst[4]  # Assuming df_lst[4] is the sleep DataFrame
+    
+    # Convert log_date to a datetime format if it's not already
+    sleep_week_df['log_date'] = pd.to_datetime(sleep_week_df['log_date'])
+    
+    # Debugging: print the first few rows to check the data format
+    print("Initial sleep_week_df:")
+    print(sleep_week_df.head())
+
+    # Extract just the date (ignore the time component)
+    sleep_week_df['date'] = sleep_week_df['log_date'].dt.date
+    
+    # Debugging: print after extracting the date
+    print("Sleep data with extracted date:")
+    print(sleep_week_df[['date', 'sleep_duration']].head())
+
+    # Group by date and sum the sleep_duration
+    sleep_grouped = sleep_week_df.groupby('date', as_index=False)['sleep_duration'].sum()
+    
+    # Debugging: print the grouped data to verify it contains multiple rows
+    print("Grouped sleep data by date:")
+    print(sleep_grouped)
+
+    # Generate the bar graph (ensure the x-axis shows only the date without time)
+    fig_sleep_week = px.bar(sleep_grouped, x='date', y='sleep_duration', 
+                            title="Sleep Pattern for the Week", 
+                            labels={'date': 'Date', 'sleep_duration': 'Total Sleep Duration (Hours)'},
+                            text='sleep_duration')
+
+    # Save the figure as an image
+    save_folder = "plots"
+    os.makedirs(save_folder, exist_ok=True)
+    save_path = os.path.join(save_folder, "fig_sleep_week.png")
+    fig_sleep_week.write_image(save_path)
+    
+    return {"message": f"Sleep week graph saved at {save_path}"}

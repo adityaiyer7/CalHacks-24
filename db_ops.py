@@ -99,7 +99,7 @@ try:
         CREATE TABLE IF NOT EXISTS sleep (
             log_id BIGINT AUTO_INCREMENT,
             baby_id BIGINT,
-            sleep_duration INT,  -- Duration in hours
+            sleep_duration INT,  
             log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (log_id)
         );

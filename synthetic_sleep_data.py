@@ -38,17 +38,19 @@ sleep_data = [
     {'baby_id': babyid, 'sleep': 3.50, 'log_date': '2024-09-18 22:00:00'},   # 3.5 hours nighttime sleep
     
     # October 2024
-    {'baby_id': babyid, 'sleep': 1.00, 'log_date': '2024-10-05 12:30:00'},   # 1 hour nap at noon
-    {'baby_id': babyid, 'sleep': 3.00, 'log_date': '2024-10-12 20:30:00'},   # 3 hours nighttime sleep
-    {'baby_id': babyid, 'sleep': 2.00, 'log_date': '2024-10-20 14:00:00'},   # 2 hours in the afternoon
-    {'baby_id': babyid, 'sleep': 0.50, 'log_date': '2024-10-20 18:30:00'}    # 30 mins in the evening
+    {'baby_id': babyid, 'sleep': 6.50, 'log_date': '2024-10-14 16:00:00'},  # Sleep on October 14
+    {'baby_id': babyid, 'sleep': 5.00, 'log_date': '2024-10-15 19:30:00'},  # Sleep on October 15
+    {'baby_id': babyid, 'sleep': 4.75, 'log_date': '2024-10-16 21:00:00'},  # Sleep on October 16
+    {'baby_id': babyid, 'sleep': 3.50, 'log_date': '2024-10-17 22:30:00'},  # Sleep on October 17
+    {'baby_id': babyid, 'sleep': 7.00, 'log_date': '2024-10-18 15:00:00'},  # Sleep on October 18
+    {'baby_id': babyid, 'sleep': 8.50, 'log_date': '2024-10-19 23:00:00'},  # Sleep on October 19
 ]
 
 # Function to ingest data into the database
 def ingest_sleep_data(data):
     for row in data:
         baby_id = row['baby_id']
-        sleep = row['sleep']
+        sleep = int(row['sleep'])
         log_date = row['log_date']  # Date is already in string format
 
         # Call the update_height function with baby_id, height, and the log_date as the timestamp
