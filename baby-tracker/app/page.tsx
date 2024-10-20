@@ -89,7 +89,7 @@ const Home: React.FC = () => {
           <div className="mb-5">
             <Image src={voiceImg} alt="Voice Image" width={200} height={200} />
           </div>
-          <p className="text-[#27595A] text-2xl font-bold">💛Using voice AI</p>
+          <p className="text-[#27595A] text-2xl font-bold">💛 Using voice AI</p>
           <h1 className="text-5xl font-bold text-gray-900 mb-5">Track Your Baby's <br /> Milestones Effortlessly</h1>
           <p>Using voice AI, enter your baby’s data quickly and easily with BabyBytes🎙️<br />Keep track of milestones, feeding schedules, and more without typing a single word!</p>
           <button className="mt-5 px-10 py-3 bg-yellow-400 text-black rounded-lg font-bold transition duration-300 hover:bg-yellow-500" onClick={navigateToSignUp}>
