@@ -107,8 +107,7 @@ def update_baby(parent_user_id, baby_name, dob):
     except Error as e:
         print(f"Error: {e}")
 
-def update_height(baby_id, height):
-
+def update_height(baby_id, height, timestamp=None):
     try:
         # Establish a connection to SingleStore
         connection = mysql.connector.connect(
@@ -124,14 +123,22 @@ def update_height(baby_id, height):
 
             # Create a new cursor
             cursor = connection.cursor()
-            # Define the SQL query to insert height data
-            insert_height_query = '''
-                INSERT INTO height (baby_id, height)
-                VALUES (%s, %s);
-            '''
 
-            # Values to insert (use the baby_id and the height value)
-            height_data = (baby_id, height)
+            # Check if a timestamp was provided
+            if timestamp is None:
+                # If no timestamp provided, use the default query (let the DB use the current timestamp)
+                insert_height_query = '''
+                    INSERT INTO height (baby_id, height)
+                    VALUES (%s, %s);
+                '''
+                height_data = (baby_id, height)
+            else:
+                # If a timestamp is provided, include it in the query
+                insert_height_query = '''
+                    INSERT INTO height (baby_id, height, log_date)
+                    VALUES (%s, %s, %s);
+                '''
+                height_data = (baby_id, height, timestamp)
 
             # Execute the query
             cursor.execute(insert_height_query, height_data)
@@ -140,16 +147,20 @@ def update_height(baby_id, height):
             connection.commit()
             print("Height data added successfully")
 
-
-            # Commit changes
-            connection.commit()
-
     except Error as e:
         print(f"Error: {e}")
+    # finally:
+    #     if connection.is_connected():
+    #         cursor.close()
+    #         connection.close()
+    #         print("Connection to SingleStore closed")
     
 
-def update_weight(baby_id, weight):
+import mysql.connector
+from mysql.connector import Error
+from datetime import datetime
 
+def update_weight(baby_id, weight, timestamp=None):
     try:
         # Establish a connection to SingleStore
         connection = mysql.connector.connect(
@@ -165,14 +176,22 @@ def update_weight(baby_id, weight):
 
             # Create a new cursor
             cursor = connection.cursor()
-            # Define the SQL query to insert height data
-            insert_weight_query = '''
-                INSERT INTO weight (baby_id, weight)
-                VALUES (%s, %s);
-            '''
 
-            # Values to insert (use the baby_id and the height value)
-            weight_data = (baby_id, weight)
+            # Check if a timestamp was provided
+            if timestamp is None:
+                # If no timestamp provided, use the default query (let the DB use the current timestamp)
+                insert_weight_query = '''
+                    INSERT INTO weight (baby_id, weight)
+                    VALUES (%s, %s);
+                '''
+                weight_data = (baby_id, weight)
+            else:
+                # If a timestamp is provided, include it in the query
+                insert_weight_query = '''
+                    INSERT INTO weight (baby_id, weight, log_date)
+                    VALUES (%s, %s, %s);
+                '''
+                weight_data = (baby_id, weight, timestamp)
 
             # Execute the query
             cursor.execute(insert_weight_query, weight_data)
@@ -181,15 +200,16 @@ def update_weight(baby_id, weight):
             connection.commit()
             print("Weight data added successfully")
 
-
-            # Commit changes
-            connection.commit()
-
     except Error as e:
         print(f"Error: {e}")
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("Connection to SingleStore closed")
 
-def update_sleep(baby_id, sleep_duration):
 
+def update_sleep(baby_id, sleep_duration, timestamp=None):
     try:
         # Establish a connection to SingleStore
         connection = mysql.connector.connect(
@@ -205,15 +225,22 @@ def update_sleep(baby_id, sleep_duration):
 
             # Create a new cursor
             cursor = connection.cursor()
-            # Define the SQL query to insert height data
-            # Define the SQL query to insert sleep data
-            insert_sleep_query = '''
-                INSERT INTO sleep (baby_id, sleep_duration)
-                VALUES (%s, %s);
-            '''
 
-            # Values to insert (use the baby_id and the sleep duration in hours)
-            sleep_data = (baby_id, 6)
+            # Check if a timestamp was provided
+            if timestamp is None:
+                # If no timestamp provided, use the default query (let the DB use the current timestamp)
+                insert_sleep_query = '''
+                    INSERT INTO sleep (baby_id, sleep_duration)
+                    VALUES (%s, %s);
+                '''
+                sleep_data = (baby_id, sleep_duration)
+            else:
+                # If a timestamp is provided, include it in the query
+                insert_sleep_query = '''
+                    INSERT INTO sleep (baby_id, sleep_duration, log_date)
+                    VALUES (%s, %s, %s);
+                '''
+                sleep_data = (baby_id, sleep_duration, timestamp)
 
             # Execute the query
             cursor.execute(insert_sleep_query, sleep_data)
@@ -222,13 +249,13 @@ def update_sleep(baby_id, sleep_duration):
             connection.commit()
             print("Sleep data added successfully")
 
-
-            # Commit changes
-            connection.commit()
-
     except Error as e:
         print(f"Error: {e}")
-
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("Connection to SingleStore closed")
 
 
 def extract_baby_id_from_name(user_id, baby_name):
@@ -355,24 +382,3 @@ def get_baby_ids_by_user_id(user_id):
             cursor.close()
             connection.close()
             print("MySQL connection is closed")
-
-
-
-
-# adding a sample user
-new_username = "Batman"
-user_email = "batman@gothamcity.com"
-update_user(new_username, user_email)
-update_user(new_username, user_email)
-
-
-
-parent_user_id = get_user_id_by_email(user_email)
-print(parent_user_id)
-baby_name = 'Elon'
-dob ='2002-11-05'
-dob = datetime.strptime(dob, "%Y-%m-%d")
-
-update_baby(parent_user_id, baby_name, dob)
-
-# update_user("batman", "iambatman@example.com")

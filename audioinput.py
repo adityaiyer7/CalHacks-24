@@ -77,5 +77,4 @@ def processimage():
    #processed_result = post_processing(intm_result)
    return result
 
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
+)

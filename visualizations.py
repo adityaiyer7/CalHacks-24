@@ -29,7 +29,7 @@ def df_extractor(baby_id):
             print("Connected to SingleStore database")
 
             # Correct baby_id from the table screenshot
-            baby_id = 2251799813685250  # Use the correct baby_id
+            baby_id = baby_id  # Use the correct baby_id
 
             # Query to get height data for the specific baby_id
             height_query = '''
@@ -60,7 +60,7 @@ def df_extractor(baby_id):
             # print("Weight DataFrame:")
             #print(df_weight)
 
-            return df_height
+            return [df_height, df_weight]
 
             # Close the connection
             # connection.close()
@@ -69,16 +69,20 @@ def df_extractor(baby_id):
         print(f"Error: {e}")
 
 
-df = df_extractor(2251799813685249)
-print(df)
+df_lst = df_extractor(2251799813685249)
+height_df = df_lst[0]
+weight_df = df_lst[1]
+print(height_df)
+print(weight_df)
+
 
 import plotly.express as px
 
 # Plot the height data
-fig_height = px.line(df, x='log_date', y='height', title='Baby Height Over Time')
+fig_height = px.line(height_df, x='log_date', y='height', title='Baby Height Over Time')
 fig_height.show()
 
 # Plot the weight data
-# fig_weight = px.line(df_weight, x='log_date', y='weight', title='Baby Weight Over Time')
-# fig_weight.show()
+fig_weight = px.line(weight_df, x='log_date', y='weight', title='Baby Weight Over Time')
+fig_weight.show()
 

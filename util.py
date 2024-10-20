@@ -74,7 +74,46 @@ def drop_table(table_name):
         print(f"Error: {e}")
 
 # Usage example
-drop_table('users')
+# drop_table('sleep')
+
+import mysql.connector
+from mysql.connector import Error
+
+def clear_table(table_name):
+    try:
+        # Establish a connection to SingleStore
+        connection = mysql.connector.connect(
+            host=host,
+            port=port,
+            user=username,
+            password=password,
+            database=database
+        )
+
+        if connection.is_connected():
+            print("Connected to SingleStore database")
+
+            # Create a new cursor
+            cursor = connection.cursor()
+            
+            # Truncate the table
+            truncate_query = f"TRUNCATE TABLE {table_name};"
+            cursor.execute(truncate_query)
+            connection.commit()
+            print(f"Table '{table_name}' cleared successfully.")
+
+    except Error as e:
+        print(f"Error: {e}")
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("Connection to SingleStore closed.")
+
+clear_table("height")  # For truncating the height table
+
+
+
 
 
 

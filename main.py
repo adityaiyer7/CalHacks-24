@@ -53,9 +53,9 @@ def main(baby_id):
 @router.post("/run_main")
 def main_caller():
     subprocess.run(['python', 'mover.py'], capture_output=True, text=True)
-    email = 'batman@gothamcity.com'
-    user_id = get_user_id_by_email(email)
-    baby_id = get_baby_ids_by_user_id(user_id)  
-    main(baby_id[0])
+    # email = 'batman@gothamcity.com'
+    # user_id = get_user_id_by_email(email)
+    # baby_id = get_baby_ids_by_user_id(user_id)  
+    # main(baby_id[0])
 
 
