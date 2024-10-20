@@ -39,6 +39,7 @@ def main(baby_id):
     transcript, time_stamp = api_caller()
     gemini_dict = processed_text(transcript)
     print(gemini_dict)
+    
 
     if bool_marker(gemini_dict, 'weight'):
         weight_updater(baby_id, gemini_dict)
