@@ -126,19 +126,19 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
 
     useEffect(() => {
         const fetchEndPoint = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/run_main', {
+            await fetch('http://127.0.0.1:8000/run_main', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     }
+                }).then((response) => {
+                    if(response.ok){
+                        setIsAudioFileDownloaded(false);
+                        setAudioBlob(null);
+                    }
+                }).catch((error) => {
+                    console.error('Error:', error);
                 });
-
-                const data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.error('Error:', error);
-            }
         };
 
         if (isAudioFileDownloaded) {

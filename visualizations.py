@@ -118,3 +118,8 @@ def sleep_graph_generator():
     save_path = os.path.join(save_folder, "sleep_graph.png")
     fig_sleep.write_image(save_path)
     return {"message": f"Sleep graph saved at {save_path}"}
+
+
+# @router.get("/generate_food_graph")
+# def food_graph_generator():
+
