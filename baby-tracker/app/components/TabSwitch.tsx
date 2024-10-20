@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
+import { useTabContext } from '../context/TabContext';
 
-const TabSwitch = () => {
-    const [activeTab, setActiveTab] = useState('home');
+const TabSwitch: React.FC = () => {
+    const { activeTab, setActiveTab } = useTabContext();
 
     const tabData = [
-        { id: 'home', label: 'Home', icon: '/images/home.png', alt: 'Home Icon' },
+        { id: 'home', label: 'All', icon: '/images/home.png', alt: 'Home Icon' },
         { id: 'feed', label: 'Feed', icon: '/images/nutritional-pyramid.png', alt: 'Food Icon' },
         { id: 'sleep', label: 'Sleep', icon: '/images/sleeping.png', alt: 'Sleep Icon' },
         { id: 'growth', label: 'Growth', icon: '/images/growth-chart.png', alt: 'Growth Icon' },
     ];
 
+    useEffect(() => {
+        console.log(activeTab)
+    }, [activeTab])
+
     return (
-        <div className="grid grid-cols-4 gap-5 w-11/12 my-10">
+        <div className="grid grid-cols-4 gap-5 bg-background rounded-[50px] w-6/12 my-10">
             {tabData.map((tab) => (
                 <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`text-white p-4 rounded shadow-md hover:animate-wiggle text-center flex items-center justify-center bg-gradient-to-r from-gradientPrimary to-gradientSecondary
-                        ${activeTab === tab.id ? 'hover:focus:ring-emerald-500 ring-2  ring-offset-2' : ''}
+                    className={`text-white p-4  hover:animate-wiggle text-center flex items-center justify-center 
+                        ${activeTab === tab.id ? 'hover:focus text-yellow-400' : ''}
                     `}
                 >
-                    <Image src={tab.icon} alt={tab.alt} width={35} height={35} />
+                    <Image src={tab.icon} alt={tab.alt} width={26} height={26} />
                     <p className="hidden md:block px-2 font-semibold">{tab.label}</p>
                 </button>
             ))}

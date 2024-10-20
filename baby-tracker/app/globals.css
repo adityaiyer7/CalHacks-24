@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --background: #FFEFDF;
-  --foreground: #FFFFFF;
-  --strong-text: #27595A; /* Use kebab-case consistently */
-  --gradient-primary: #27595A;
+  --background: #27595A;
+  --foreground: #E3F6FE;
+  --strong-text: #E3F6FE; /* Use kebab-case consistently */
+  --gradient-primary: #E3F6FE;
   --gradient-secondary: #B0C3BF;
 }
 

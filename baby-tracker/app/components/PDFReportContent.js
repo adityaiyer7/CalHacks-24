@@ -2,7 +2,7 @@
 
 const PDFReportContent = ({ title, description, recordingStatus, generatedOn }) => {
     return (
-        <div className="border border-black text-black p-4 rounded-md shadow-sm mt-10 h-[80vh] overflow-auto">
+        <div className="border border-gray-400 text-black p-4 shadow-sm mt-10 h-[80vh] overflow-auto">
             <h2 className="text-xl font-bold">{title}</h2>
             <p>{description}</p>
             <p><strong>Recording Status:</strong> {recordingStatus}</p>

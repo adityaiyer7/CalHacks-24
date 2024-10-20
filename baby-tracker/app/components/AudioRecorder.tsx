@@ -6,6 +6,7 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const [audioURL, setAudioURL] = useState<string | null>(null);
+    const [isAudioFileDownloaded, setIsAudioFileDownloaded] = useState(false);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
 
@@ -26,7 +27,7 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
                 convertToWav(audioBlob);
                 audioChunksRef.current = []; // Clear the chunks
             };
-
+            handleAIBotRecording && handleAIBotRecording();
             mediaRecorder.start();
             setIsRecording(true);
         } catch (error) {
@@ -35,11 +36,10 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
     };
 
     const stopRecording = () => {
+        handleAIBotRecording && handleAIBotRecording();
         mediaRecorderRef.current?.stop();
         mediaRecorderRef.current?.stream.getTracks().forEach(track => track.stop());
         setIsRecording(false);
-        handleAIBotRecording && handleAIBotRecording();
-        handleUpload();
     };
 
     const convertToWav = async (webmBlob: Blob) => {
@@ -105,30 +105,7 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
         }
     };
 
-    const handleUpload = async () => {
-        if (audioBlob) {
-            const formData = new FormData();
-            formData.append('file', audioBlob, 'recording.wav');
-    
-            try {
-                const response = await fetch('http://127.0.0.1:8000/transcribe', {
-                    method: 'POST',
-                    body: formData,
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Failed to upload audio');
-                }
-    
-                const data = await response.json();
-                console.log('Transcription:', data.transcription);
-                console.log('Creation Timestamp:', data.creation_time_stamp);
-            } catch (error) {
-                console.error('Error uploading audio:', error);
-            }
-        }
-    };
-
+   
     const downloadAudio = () => {
         if (audioURL) {
             const link = document.createElement('a');
@@ -137,14 +114,27 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            setIsAudioFileDownloaded(true);
         }
     };
 
     useEffect(() => {
         if (audioURL) {
             downloadAudio();
-        }
+        } 
     }, [audioURL]);
+
+    useEffect(() => {
+        const fetchEndPoint = async () => {
+            await fetch('http://127.0.0.1:8000/run_main')
+                .then((response) => {
+                    console.log(response);
+                }).catch((err => {
+                    console.error(err);
+                })) 
+        };
+        fetchEndPoint();
+    }, [isAudioFileDownloaded])
 
     return (
         <div className="flex flex-col items-center">

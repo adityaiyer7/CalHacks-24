@@ -6,6 +6,13 @@ from db_crud import update_user, update_baby, update_height, update_weight, upda
 from db_ops import *
 from app import router
 import subprocess
+from dotenv import load_dotenv
+
+
+
+baby_id = os.getenv("BABYID")
+
+
 
 def api_caller():
     response = requests.post("http://127.0.0.1:8000/transcribe")
@@ -52,10 +59,19 @@ def main(baby_id):
 
 @router.post("/run_main")
 def main_caller():
-    subprocess.run(['python', 'mover.py'], capture_output=True, text=True)
+    print("I get called here")
+    result = subprocess.run(['python', 'mover.py'], capture_output=True, text=True)
+
+    # Check if the script ran successfully
+    if result.returncode == 0:
+        print("Script executed successfully.")
+        print(result.stdout)  # Print the output of the script
+    else:
+        print(f"Script execution failed with return code {result.returncode}")
+        print(result.stderr)  # Print the error message
     # email = 'batman@gothamcity.com'
     # user_id = get_user_id_by_email(email)
     # baby_id = get_baby_ids_by_user_id(user_id)  
-    # main(baby_id[0])
+    main(baby_id)
 
 

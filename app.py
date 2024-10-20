@@ -1,4 +1,6 @@
 from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -7,6 +9,15 @@ router = APIRouter()
 
 import audioinput
 import main
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can restrict this to specific domains
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Include the router into the FastAPI app
