@@ -68,7 +68,7 @@ export default function Profile() {
         <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">
             <div className="flex flex-row justify-stretch items-stretch w-full h-screen">
                 <Navbar handleAIBotClick={handleAIBotClick} />
-                <div className="flex flex-col justify-center items-center w-full h-auto">
+                <div className="flex flex-col justify-center items-center bg-foreground rounded-l-[50px] w-full h-auto">
                     {/* {isAIBotOpen && (
                         <div className="flex justify-center items-center hover:animate-wiggle hover:opacity-70 hover:cursor-pointer">
                             <div className="relative">
@@ -104,29 +104,29 @@ export default function Profile() {
                         </div>
                     )} */}
 
-                    <div className="bg-white shadow-lg rounded-[20px] p-6 w-full max-w-sm">
+                    <div className="bg-background shadow-lg rounded-[20px] p-16 w-full max-w-sm">
                         {/* Baby Picture */}
                         <div className="flex justify-center mb-4">
                             <img
-                                src="/images/baby-photo.png" // Replace with actual image path
+                                src="/images/avatar.jpg" // Replace with actual image path
                                 alt="Baby Profile"
-                                className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
+                                className="w-18 h-18 rounded-full border-4 border-foreground object-cover"
                             />
                         </div>
 
                         {/* Baby Information */}
                         <div className="text-center">
-                            <h2 className="text-xl font-bold mb-2">Baby Name</h2>
-                            <p className="text-gray-600 mb-1">Date of Birth: January 1, 2023</p>
-                            <p className="text-gray-600 mb-1">Gender: Male</p>
-                            <p className="text-gray-600 mb-1">Weight: 15 lbs</p>
-                            <p className="text-gray-600 mb-1">Height: 24 inches</p>
+                            <h2 className="text-xl text-yellow-400 font-bold mb-2">Baby Name</h2>
+                            <p className="text-white">Birthday: January 1, 2023</p>
+                            <p className="text-white">Gender: Male</p>
+                            <p className="text-white">Weight: 15 lbs</p>
+                            <p className="text-gwhite">Height: 24 inches</p>
                         </div>
 
                         {/* Milestones, Health Info, etc. */}
                         <div className="mt-4">
-                            <h3 className="text-lg font-semibold mb-2">Milestones</h3>
-                            <ul className="list-disc list-inside text-gray-600">
+                            <h3 className="text-lg text-foreground underline font-semibold mb-2">Milestones</h3>
+                            <ul className="list-disc list-inside text-white">
                                 <li>First smile: March 1, 2023</li>
                                 <li>First word: July 15, 2023</li>
                                 <li>First steps: September 10, 2023</li>
@@ -139,7 +139,7 @@ export default function Profile() {
                                 Edit Profile
                             </button>
                             <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded-[20px] hover:bg-gray-400">
-                                View More
+                                Upload Avatar
                             </button>
                         </div>
                     </div>

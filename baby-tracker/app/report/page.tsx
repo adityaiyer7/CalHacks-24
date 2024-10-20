@@ -68,7 +68,7 @@ export default function Report() {
         <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">
             <div className="flex flex-row justify-stretch items-stretch w-full h-screen">
                 <Navbar handleAIBotClick={handleAIBotClick} />
-                <div className="flex flex-col justify-between items-center w-full h-auto">
+                <div className="flex flex-col justify-between items-center bg-foreground rounded-l-[50px] w-full h-auto">
                     {/* {isAIBotOpen && (
                         <div className="flex justify-center items-center hover:animate-wiggle hover:opacity-70 hover:cursor-pointer">
                             <div className="relative">
@@ -116,7 +116,7 @@ export default function Report() {
                     <div className="flex flex-col items-center my-5">
                         <button
                             onClick={generatePDF}
-                            className="px-10 py-2 bg-[#27595A] text-white rounded-[20px] hover:bg-[#FF7600] mb-5"
+                            className="px-10 py-4 bg-[#27595A] text-white rounded-[50px] hover:bg-[#FF7600] mb-5"
                         >
                             Download PDF
                         </button>

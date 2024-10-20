@@ -24,7 +24,7 @@ export default function Dashboard() {
     <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">
       <div className="flex flex-row justify-stretch items-stretch w-full h-screen">
         <Navbar handleAIBotClick={handleAIBotClick} />
-        <div className="flex flex-col justify-between items-center w-full h-auto">
+        <div className="flex flex-col justify-between items-center bg-foreground rounded-l-[50px] roun w-full h-auto">
           {/*Chart View Selection*/}
           <TabSwitch />
           {isAIBotOpen && (

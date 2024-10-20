@@ -156,13 +156,14 @@ const styles: { [key: string]: React.CSSProperties } = {
   navMenu: {
     listStyle: 'none',
     display: 'flex',
-    gap: '20px',
+    gap: '50px',
   },
   authButtons: {
     display: 'flex',
     gap: '10px',
   },
   button: {
+    fontWeight: 'bold',
     padding: '10px 20px',
     border: 'none',
     borderRadius: '10px',
