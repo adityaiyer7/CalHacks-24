@@ -75,6 +75,14 @@ def df_extractor(baby_id):
             ORDER BY log_date ASC;
             '''
 
+            sleep_today_query = '''
+            SELECT sleep_duration, log_date
+            FROM sleep
+            WHERE baby_id = %s
+            AND DATE(log_date) = CURDATE()
+            ORDER BY log_date ASC;
+            '''
+
             # Load height data into a DataFrame
             df_height = pd.read_sql(height_query, connection, params=(baby_id,))
 
@@ -87,6 +95,8 @@ def df_extractor(baby_id):
 
             df_sleep_week = pd.read_sql(sleep_last_7_days_query, connection, params=(baby_id,))
 
+            df_sleep_today = pd.read_sql(sleep_today_query, connection, params=(baby_id, ))
+
             # Display the DataFrames to check if they contain the correct data
             # print("Height DataFrame:")
             # print(df_height)
@@ -94,7 +104,7 @@ def df_extractor(baby_id):
             # print("Weight DataFrame:")
             #print(df_weight)
 
-            return [df_height, df_weight, df_sleep, df_food, df_sleep_week]
+            return [df_height, df_weight, df_sleep, df_food, df_sleep_week, df_sleep_today]
 
             # Close the connection
             # connection.close()
@@ -109,7 +119,7 @@ def height_graph_generator():
     df_lst = df_extractor(2251799813685249)
     height_df = df_lst[0]
     fig_height = px.line(height_df, x='log_date', y='height', title='Height Progression Chart')
-    save_folder = "plots"
+    save_folder = "baby-tracker/public/images"
     os.makedirs(save_folder, exist_ok=True)
     save_path = os.path.join(save_folder, "height_graph.png")
     fig_height.write_image(save_path)
@@ -121,7 +131,7 @@ def weight_graph_generator():
     df_lst = df_extractor(2251799813685249)
     weight_df = df_lst[1]
     fig_weight = px.line(weight_df, x='log_date', y='weight', title='Weight Progression Chart')
-    save_folder = "plots"
+    save_folder = "baby-tracker/public/images"
     os.makedirs(save_folder, exist_ok=True)
     save_path = os.path.join(save_folder, "weight_graph.png")
     fig_weight.write_image(save_path)
@@ -132,7 +142,7 @@ def sleep_graph_generator():
     df_lst = df_extractor(2251799813685249)
     sleep_df = df_lst[2]
     fig_sleep = px.line(sleep_df, x='log_date', y='sleep_duration', title='Historical Sleep Graph')
-    save_folder = "plots"
+    save_folder = "baby-tracker/public/images"
     os.makedirs(save_folder, exist_ok=True)
     save_path = os.path.join(save_folder, "sleep_graph.png")
     fig_sleep.write_image(save_path)
@@ -144,7 +154,7 @@ def food_graph_generator():
     df_lst = df_extractor(2251799813685249)
     food_df = df_lst[3]
     fig_food =  px.bar(food_df, x='food', y='food_score', title= "Overview of today's meals", labels={'food_score': 'Food Score', 'food': 'Food'})
-    save_folder = "plots"
+    save_folder = "baby-tracker/public/images"
     os.makedirs(save_folder, exist_ok=True)
     save_path = os.path.join(save_folder, "food_graph.png")
     fig_food.write_image(save_path)
@@ -185,7 +195,7 @@ def sleep_week_graph_generator():
                             text='sleep_duration')
 
     # Save the figure as an image
-    save_folder = "plots"
+    save_folder = "baby-tracker/public/images"
     os.makedirs(save_folder, exist_ok=True)
     save_path = os.path.join(save_folder, "fig_sleep_week.png")
     fig_sleep_week.write_image(save_path)
