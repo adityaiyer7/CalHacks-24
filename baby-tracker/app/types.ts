@@ -14,3 +14,8 @@ export type AudioCaptureButtonProps = {
     onClick: () => void;
     isRecording: boolean;
 }
+
+export type AIBotProps = {
+    isOpen: boolean;
+    handleAIBotClick: () => void;
+}

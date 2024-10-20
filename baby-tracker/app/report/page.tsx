@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { jsPDF } from "jspdf";
 import Navbar from "../components/Navbar";
 import PDFReportContent from "../components/PDFReportContent"; 
@@ -59,10 +59,6 @@ export default function Report() {
         doc.save("AI_Report.pdf");
     };
     
-
-    useEffect(() => {
-        console.log("isRecording", isRecording);
-    }, [isRecording]);
 
     return (
         <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">

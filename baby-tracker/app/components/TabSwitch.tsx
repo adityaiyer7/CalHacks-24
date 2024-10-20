@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
+import { useTabContext } from '../context/TabContext';
 
-const TabSwitch = () => {
-    const [activeTab, setActiveTab] = useState('home');
+const TabSwitch: React.FC = () => {
+    const { activeTab, setActiveTab } = useTabContext();
 
     const tabData = [
         { id: 'home', label: 'All', icon: '/images/home.png', alt: 'Home Icon' },
@@ -10,6 +11,10 @@ const TabSwitch = () => {
         { id: 'sleep', label: 'Sleep', icon: '/images/sleeping.png', alt: 'Sleep Icon' },
         { id: 'growth', label: 'Growth', icon: '/images/growth-chart.png', alt: 'Growth Icon' },
     ];
+
+    useEffect(() => {
+        console.log(activeTab)
+    }, [activeTab])
 
     return (
         <div className="grid grid-cols-4 gap-5 bg-background rounded-[50px] w-6/12 my-10">
