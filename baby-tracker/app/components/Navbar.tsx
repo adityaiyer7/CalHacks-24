@@ -20,7 +20,6 @@ const Navbar = ({ handleSelectedTab}: AIVoiceChatBotProps) => {
         { name: 'History', icon: '/images/history.png', alt: 'History Icon', route: '/history' },
         { name: 'Settings', icon: '/images/settings.png', alt: 'Settings Icon', route: '/settings' },
         { name: 'Exit', icon: '/images/logout.png', alt: 'Logout Icon', route: '/' },
-        { name: 'AI Voice Chat', icon: '/images/chat-bot.png', alt: 'AI Voice Chat Bot', route: '/chat' }
     ];
 
     const handleNavItemSelection = (name: string, route: string) => {

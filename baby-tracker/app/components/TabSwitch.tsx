@@ -6,7 +6,7 @@ const TabSwitch: React.FC = () => {
     const { activeTab, setActiveTab } = useTabContext();
 
     const tabData = [
-        { id: 'home', label: 'All', icon: '/images/home.png', alt: 'Home Icon' },
+        { id: 'all', label: 'All', icon: '/images/home.png', alt: 'Home Icon' },
         { id: 'feed', label: 'Feed', icon: '/images/nutritional-pyramid.png', alt: 'Food Icon' },
         { id: 'sleep', label: 'Sleep', icon: '/images/sleeping.png', alt: 'Sleep Icon' },
         { id: 'growth', label: 'Growth', icon: '/images/growth-chart.png', alt: 'Growth Icon' },
