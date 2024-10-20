@@ -14,6 +14,7 @@ def api_caller():
 def processed_text(transcription):
     gemini_output = extract_parameters(transcription)
     processed_gemini_output = post_processing(gemini_output)
+    print(processed_gemini_output)
     return processed_gemini_output
 
 
@@ -35,6 +36,7 @@ def bool_marker(dict, parameter):
 def main(baby_id):
     transcript, time_stamp = api_caller()
     gemini_dict = processed_text(transcript)
+    print(gemini_dict)
 
     if bool_marker(gemini_dict, 'weight'):
         weight_updater(baby_id, gemini_dict)

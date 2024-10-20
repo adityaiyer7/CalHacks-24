@@ -4,12 +4,14 @@ from fastapi import FastAPI, UploadFile, File
 import requests
 from deepgram import DeepgramClient
 import uvicorn
+import time
 
 
 # load Deepgram API key
 
 load_dotenv()
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
+
 FILE_PATH = "tempaudio/Record (online-voice-recorder.com).wav"
 
 app = FastAPI()
