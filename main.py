@@ -4,6 +4,8 @@ from text_filter import *
 import ast
 from db_crud import update_user, update_baby, update_height, update_weight, update_sleep, extract_baby_id_from_name, get_user_id_by_email, get_baby_ids_by_user_id
 from db_ops import *
+from app import router
+import subprocess
 
 def api_caller():
     response = requests.post("http://127.0.0.1:8000/transcribe")
@@ -45,11 +47,14 @@ def main(baby_id):
     if bool_marker(gemini_dict, 'sleep'):
         sleep_updater(baby_id, gemini_dict)
 
-email = 'batman@gothamcity.com'
-user_id = get_user_id_by_email(email)
-baby_id = get_baby_ids_by_user_id(user_id)
 
-main(baby_id[0])
 
+@router.post("/run_main")
+def main_caller():
+    subprocess.run(['python', 'mover.py'], capture_output=True, text=True)
+    email = 'batman@gothamcity.com'
+    user_id = get_user_id_by_email(email)
+    baby_id = get_baby_ids_by_user_id(user_id)  
+    main(baby_id[0])
 
 

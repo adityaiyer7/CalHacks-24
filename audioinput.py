@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File
+from app import router
 import requests
 from deepgram import DeepgramClient
 import uvicorn
@@ -14,9 +15,9 @@ DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
 
 FILE_PATH = "tempaudio/Record (online-voice-recorder.com).wav"
 
-app = FastAPI()
 
-@app.post("/transcribe")
+
+@router.post("/transcribe")
 def transcribe():
    print("I entered here")
    # Define the URL and headers
@@ -34,7 +35,3 @@ def transcribe():
    transcription = json_output["results"]["channels"][0]["alternatives"][0]["transcript"]
    creation_time_stamp = json_output["metadata"]["created"]
    return transcription, creation_time_stamp
-
-
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
