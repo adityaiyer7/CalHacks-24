@@ -80,3 +80,22 @@ def processimage():
    print("fooddb has been updated")
    #processed_result = post_processing(intm_result)
    return result
+
+
+# @router.post("/generate_recipe")
+# def recipe_generator(food_lst, food_score_lst):
+#    # Choosing model
+#    model = genai.GenerativeModel("gemini-1.5-pro")
+
+#    prompt = """You are a helpful assistant to a new mother. Here is some food data: f{food_lst} and here is the food score f{food_score_lst}.
+#    A higher food score means that the baby has eaten more of that food item. Based on this information, generate a recipe such that all nutrients that the baby needs are covered.
+#    Give me 3 recipes. Format it as json so you have the recipe number as the key and recipe as the value. Do not add anything else in your output. 
+#    """
+
+#    result = model.generate_content(prompt)
+#    intm_result = result.text
+#    result = json.loads(intm_result)
+   
+#    print(result)
+#    #processed_result = post_processing(intm_result)
+#    return result

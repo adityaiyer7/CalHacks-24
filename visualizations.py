@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 from app import router
 import plotly.io as pio
+import requests
 
 # Load environment variables
 load_dotenv()
