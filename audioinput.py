@@ -19,8 +19,8 @@ load_dotenv()
 # Load Deepgram API key and set up server
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
 
-FILE_PATH = "tempaudio/Record (online-voice-recorder.com).wav"
-baby_id = os.get("BABYID")
+FILE_PATH = "tempaudio/recording.wav"
+baby_id = os.getenv("BABYID")
 
 
 @router.post("/transcribe")
@@ -42,7 +42,7 @@ def transcribe():
    creation_time_stamp = json_output["metadata"]["created"]
 
    # Delete the audio file
-   os.remove(FILE_PATH)
+   # os.remove(FILE_PATH)
 
    # Return response
    return transcription, creation_time_stamp
