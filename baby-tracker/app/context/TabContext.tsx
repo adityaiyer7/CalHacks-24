@@ -8,7 +8,7 @@ type TabContextType = {
 const TabContext = createContext<TabContextType | undefined>(undefined);
 
 export const TabProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [activeTab, setActiveTab] = useState<string>('home');
+    const [activeTab, setActiveTab] = useState<string>('all');
 
     return (
         <TabContext.Provider value={{ activeTab, setActiveTab }}>

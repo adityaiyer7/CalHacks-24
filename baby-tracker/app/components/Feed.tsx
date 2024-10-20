@@ -32,7 +32,7 @@ const Feed = () => {
 
                 {/* Feed Graph */}
                 <div className='flex justify-center items-center w-full mx-2'>
-                    <Image src='/images/sample-chart.webp' alt='Feed Graph' width={500} height={500} />
+                    <Image src='/images/food_graph.png' alt='Feed Graph' width={500} height={500} />
                 </div>
 
 
@@ -68,7 +68,7 @@ const Feed = () => {
                             y="130" // Positioning below the percentage
                             textAnchor="middle"
                             dominantBaseline="middle"
-                            className="text-center text-md text-gray-700"
+                            className="text-center text-md text-gray-700 px-5"
                         >
                             Daily Goal Achieved
                         </text>

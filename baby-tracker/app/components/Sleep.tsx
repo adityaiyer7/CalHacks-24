@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-
+import { useDropdown } from '../context/DropdownContext';
 const Sleep = () => {
+    const { selectedOption } = useDropdown();
     // Example values for sleep percentages and total time
     const napPercentage = 30; // For example, 30% of the nap circle
     const nightPercentage = 70; // For example, 70% of the night circle
@@ -86,7 +87,8 @@ const Sleep = () => {
                 </div>
                 {/* Sleep Graph */}
                 <div className='flex justify-center items-center mx-5'>
-                    <Image src='/images/sample-chart.webp' alt='Sleep Graph' width={500} height={500} />
+                {selectedOption === 'Today' ? (<Image src={'/images/sleep_graph.png'} alt='Sleep Graph' width={500} height={500} />): (null)}
+                {selectedOption === 'Last Week' ? (<Image src={'/images/fig_sleep_week.png'} alt='Sleep Graph' width={500} height={500} />):(null)}
                 </div>
             </div>
         </div>

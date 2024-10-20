@@ -1,9 +1,9 @@
 "use client";
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { NavProvider } from "./context/NavContext";
 import { TabProvider } from "./context/TabContext";
+import { DropdownProvider } from "./context/DropdownContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +30,9 @@ export default function RootLayout({
       >
         <NavProvider>
           <TabProvider>
-            {children}
+            <DropdownProvider>
+              {children}
+            </DropdownProvider>
           </TabProvider>
         </NavProvider>
 

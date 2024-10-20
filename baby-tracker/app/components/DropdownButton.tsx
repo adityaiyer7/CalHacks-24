@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useDropdown } from '../context/DropdownContext';
 
 const DropdownButton = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Select an option');
+  const { selectedOption, setSelectedOption } = useDropdown();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -58,6 +59,7 @@ const DropdownButton = () => {
                 role="menuitem"
                 tabIndex={-1}
                 onClick={() => handleOptionClick(option)}
+                
               >
                 {option}
               </a>
