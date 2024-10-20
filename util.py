@@ -110,7 +110,7 @@ def clear_table(table_name):
             connection.close()
             print("Connection to SingleStore closed.")
 
-clear_table("height")  # For truncating the height table
+clear_table("sleep")  # For truncating the height table
 
 
 
