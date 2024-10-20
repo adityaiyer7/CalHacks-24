@@ -1,5 +1,4 @@
 export type AIVoiceChatBotProps = {
-    handleAIBotClick?: () => void;
     handleAIBotRecording?: () => void;
     handleSelectedTab? : (navName: string) => void;
     parentSelectedTab?: string;
@@ -18,4 +17,8 @@ export type AudioCaptureButtonProps = {
 export type AIBotProps = {
     isOpen: boolean;
     handleAIBotClick: () => void;
+}
+
+export type BabyBottleProps = {
+    progress: number;
 }

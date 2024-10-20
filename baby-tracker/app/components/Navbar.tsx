@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -5,7 +6,8 @@ import { AIVoiceChatBotProps } from '../types';
 import DataEntryBar from './DataEntryBar';
 import { useNavContext } from '../context/NavContext';
 
-const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => {
+
+const Navbar = ({ handleSelectedTab}: AIVoiceChatBotProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { selectedNav, setSelectedNav } = useNavContext();
     const [isAIWidgetOpen, setIsAIWidgetOpen] = useState(false);
@@ -18,6 +20,7 @@ const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => 
         { name: 'History', icon: '/images/history.png', alt: 'History Icon', route: '/history' },
         { name: 'Settings', icon: '/images/settings.png', alt: 'Settings Icon', route: '/settings' },
         { name: 'Exit', icon: '/images/logout.png', alt: 'Logout Icon', route: '/' },
+        { name: 'AI Voice Chat', icon: '/images/chat-bot.png', alt: 'AI Voice Chat Bot', route: '/chat' }
     ];
 
     const handleNavItemSelection = (name: string, route: string) => {
@@ -29,7 +32,7 @@ const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => 
 
     const handleAIWidgetClick = () => {
         setIsAIWidgetOpen(!isAIWidgetOpen);
-        handleAIBotClick && handleAIBotClick();
+        router.push('/chat');
     }
 
 
@@ -113,11 +116,6 @@ const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => 
                     <path d="M9.00896 11H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M15.009 11H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                {isAIWidgetOpen && selectedNav !== 'Home' && selectedNav !== 'History' && (
-                    <div className="absolute left-[700%] ml-4 top-3 transform translate-y-[-50%] w-[500px] md:w-[800px]">
-                        <DataEntryBar handleAIBotRecording={() => { }} />
-                    </div>
-                )}
 
             </div>
 

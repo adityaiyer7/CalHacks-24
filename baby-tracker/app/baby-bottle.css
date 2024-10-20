@@ -1,0 +1,94 @@
+.baby-bottle {
+    position: relative;
+    width: 100px; /* Adjust the width */
+    height: 250px; /* Adjust the height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottle-cap {
+    width: 0;
+    height: 0;
+    border-top: none;
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-bottom: 40px solid #e89eb8;
+    bottom: 209px;
+    left: 156px;
+}
+
+.bottle-round-top{
+    display: block;
+    position: absolute;
+    height: 20px;
+    width: 18px;
+    background: yellow;
+    left: 41px;
+    bottom: 237px;
+    border-top: 6px solid rgb(243, 117, 77);
+    border-left: 6px solid rgb(243, 117, 77);
+    border-right: 6px solid rgb(243, 117, 77);
+    border-radius: 100px 100px 0 0;
+}
+
+
+.bottle-neck {
+    width:65px;
+    height: 14px;
+    background: orange;
+    border: 3px solid rgb(243, 117, 77);
+    left: 149px;
+    bottom: 188px;
+}
+
+.bottle-body {
+    width: 93px;
+    height: 80%;
+    left: 132px;
+    background: white;
+    border-radius: 25% 25% 0 0;
+}
+
+.milk-level {
+    width: 95%; /* Keep this for the main width */
+    height: 40px; /* This will be your current height */
+    max-height: 100%; /* Keep this as is to limit the height */
+    background-color: #ced0c8; /* Change this to the desired milk color */
+    position: absolute;
+    bottom: 0; /* Align to bottom of the bottle body */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Adjust position to center */
+    border-radius: 20px 20px 0 0; /* Rounded top corners */
+}
+
+.line {
+    position: absolute; /* Position relative to the bottle body */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust position to center */
+    height: 2px; /* Thickness of the line */
+    background-color: black; /* Line color */
+}
+
+
+.line-40 {
+    bottom: 60%; /* 40% of bottle height */
+    width: 60%;
+}
+
+.line-60 {
+    bottom: 40%; /* 60% of bottle height */
+    width: 60%;
+}
+
+.line-80 {
+    bottom: 20%; /* 80% of bottle height */
+    width: 60%;
+}
+
+.line-100 {
+    bottom: 0%; /* Align at the bottom */
+    width: 60%;
+}
+
+
