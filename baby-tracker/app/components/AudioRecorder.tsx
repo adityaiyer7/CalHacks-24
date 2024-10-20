@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import AudioCaptureButton from './AudioCaptureButton';
-
-export default function AudioRecorder() {
+import { AIVoiceChatBotProps } from '../types';
+export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotProps) {
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -35,7 +35,10 @@ export default function AudioRecorder() {
 
     const stopRecording = () => {
         mediaRecorderRef.current?.stop();
+        // Stop all audio tracks of the media stream
+        mediaRecorderRef.current?.stream.getTracks().forEach(track => track.stop());
         setIsRecording(false);
+        handleAIBotRecording && handleAIBotRecording();
     };
 
     const convertToWav = async (webmBlob: Blob) => {

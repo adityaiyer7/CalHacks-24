@@ -5,17 +5,22 @@ import { AIVoiceChatBotProps } from '../types';
 
 const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
+    const [selectedItem, setSelectedItem] = React.useState<string>('Home');
 
-    const router = useRouter();
+    const router = useRouter()
+;
+    const navItems = [
+        { name: 'Home', icon: '/images/home.png', alt: 'Home Icon', route: '/dashboard' },
+        { name: 'Profile', icon: '/images/baby.png', alt: 'Profile Icon', route: '/profile' },
+        { name: 'Report', icon: '/images/report.png', alt: 'Report Icon', route: '/report' },
+        { name: 'History', icon: '/images/history.png', alt: 'History Icon', route: '/history' },
+        { name: 'Settings', icon: '/images/settings.png', alt: 'Settings Icon', route: '/settings' },
+    ];
 
-    const handleDashboardClick = () => {
-        router.push("/"); // Navigate to Login
-    };
-
-    const handleReportClick = () => {
-        router.push("/report"); // Navigate to Login
-    };
-
+    const handleNavItemSelection = (name: string, route: string) => {
+        setSelectedItem(name);
+        router.push(route);
+    }
 
     return (
         <div className={`${isExpanded ? 'md:w-44 w-16' : 'w-16 md:w-24'} flex flex-col justify-between items-center bg-gradient-to-r from-gradientPrimary to-gradientSecondary p-4 h-screen rounded-r-lg`}>
@@ -35,18 +40,16 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
                         </svg>
                     </div>
                 )
-
                 }
-
             </div>
             {/* Logo and App name */}
             <div id="app-identity" className="flex flex-row justify-evenly items-center mb-4">
-                <img src="https://via.placeholder.com/50" alt="app logo" className="rounded-full" />
+                <Image src={"/images/baby.png"} alt="app logo" className="rounded-full" width={50} height={50} />
                 {isExpanded && <h1 className="text-2xl text-strongText ml-2 hidden md:block">App Name</h1>}
             </div>
             {/* Profile Picture & Name */}
             <div className="text-center mb-3">
-                <img src="https://via.placeholder.com/250" alt="profile picture" className="rounded-full w-32 h-32 mx-auto" />
+                <Image src={"/images/baby.png"} alt="profile picture" className="rounded-full w-32 h-32 mx-auto" width={250} height={50} />
                 {isExpanded && (
                     <a className="mt-2 text-strongText hidden md:block">
                         Baby Name
@@ -57,72 +60,25 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
             {/* Nav List */}
             <div className="flex flex-col justify-center items-center">
                 <ul className="w-11/12 h-auto">
-                    <li 
-                        className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2"
-                        onClick={handleDashboardClick}
-                    >
-                        <div className="w-8 h-8">
-                            <Image
-                                src="/images/home.png"
-                                alt="Home Icon"
-                                className="w-full h-full object-contain" // Ensure the aspect ratio is maintained
-                                width={30}
-                                height={30}
-                            />
-                        </div>
-                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Home</a>}
-                    </li>
-                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
-                        <div className="w-8 h-8">
-                            <Image
-                                src="/images/baby.png"
-                                alt="Profile Icon"
-                                className="w-full h-full object-contain"
-                                width={30}
-                                height={30}
-                            />
-                        </div>
-                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Profile</a>}
-                    </li>
-                    <li
-                        className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2"
-                        onClick={handleReportClick}
-                    >
-                        <div className="w-8 h-8">
-                            <Image
-                                src="/images/report.png"
-                                alt="Report Icon"
-                                className="w-full h-full object-contain"
-                                width={30}
-                                height={30}
-                            />
-                        </div>
-                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Report</a>}
-                    </li>
-                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
-                        <div className="w-8 h-8">
-                            <Image
-                                src="/images/history.png"
-                                alt="History Icon"
-                                className="w-full h-full object-contain"
-                                width={30}
-                                height={30}
-                            />
-                        </div>
-                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">History</a>}
-                    </li>
-                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
-                        <div className="w-8 h-8">
-                            <Image
-                                src="/images/settings.png"
-                                alt="Settings Icon"
-                                className="w-full h-full object-contain"
-                                width={30}
-                                height={30}
-                            />
-                        </div>
-                        {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Settings</a>}
-                    </li>
+                    {navItems.map((item) => (
+                        <li
+                            key={item.name}
+                            className={`flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-lg shadow-lg p-2 my-2 ${selectedItem === item.name ? 'border-2 border-primary' : ''
+                                }`}
+                            onClick={() => handleNavItemSelection(item.name, item.route)}
+                        >
+                            <div className="w-8 h-8">
+                                <Image
+                                    src={item.icon}
+                                    alt={item.alt}
+                                    className="w-full h-full object-contain"
+                                    width={30}
+                                    height={30}
+                                />
+                            </div>
+                            {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">{item.name}</a>}
+                        </li>
+                    ))}
                 </ul>
             </div>
 

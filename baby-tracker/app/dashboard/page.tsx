@@ -14,15 +14,10 @@ export default function Dashboard() {
     setIsRecording(!isRecording);
   };
 
-  useEffect(() => {
-    console.log("isRecording", isRecording);
-  }, [isRecording]);
-
-
   return (
     <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">
       <div className="flex flex-row justify-stretch items-stretch w-full h-screen">
-        <Navbar handleAIBotClick={handleAIBotClick} />
+        <Navbar handleAIBotClick={handleAIBotClick}/>
         <div className="flex flex-col justify-between items-center w-full h-auto">
           {/*Chart View Selection*/}
           <TabSwitch />

@@ -33,7 +33,7 @@ const DataEntryBar = ({handleAIBotRecording}: AIVoiceChatBotProps) => {
                     className="w-11/12 bg-transparent text-black px-2 py-1 outline-none"
                 />
                 <div className="flex w-fit flex-row justify-end items-center p-1 hover:opacity-70">
-                    <AudioRecorder/>
+                    <AudioRecorder handleAIBotRecording={handleRecording}/>
                 </div>
                 <div className="flex w-fit h-fit flex-row justify-center items-center p-1 px-2 hover:opacity-70">
                     <button>
