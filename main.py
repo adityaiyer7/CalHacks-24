@@ -73,5 +73,6 @@ def main_caller():
     # user_id = get_user_id_by_email(email)
     # baby_id = get_baby_ids_by_user_id(user_id)  
     main(baby_id)
+    requests.post("http://127.0.0.1:8000/generate_sleep_graph_weekly")
 
 
