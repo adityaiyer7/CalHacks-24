@@ -7,11 +7,22 @@ const ImageUpload = () => {
         const file = event.target.files?.[0]; // Get the first selected file
         if (file) {
             setImageFile(file); // Store the file in state
+            downloadFile(file); // Trigger download immediately after file selection
         } else {
             console.log('No file selected');
         }
     };
 
+    const downloadFile = (file: File) => {
+        const url = URL.createObjectURL(file); // Create a temporary URL for the file
+        const a = document.createElement('a'); // Create an anchor element
+        a.href = url; // Set the href to the temporary URL
+        a.download = file.name; // Use the original file name for the download
+        document.body.appendChild(a); // Append anchor to the body
+        a.click(); // Programmatically click the anchor to trigger the download
+        document.body.removeChild(a); // Remove the anchor from the DOM
+        URL.revokeObjectURL(url); // Clean up the URL object
+    };
 
     const handleUpload = () => {
         if (imageFile) {
@@ -23,13 +34,13 @@ const ImageUpload = () => {
                 method: 'POST',
                 body: formData,
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
     };
 
@@ -62,10 +73,10 @@ const ImageUpload = () => {
                         PNG, JPG, JPEG
                     </p>
                 </div>
-                <input 
-                    id="dropzone-file" 
-                    type="file" 
-                    className="hidden" 
+                <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
                     accept="image/png, image/jpeg, image/jpg" // Accept only image files
                     onChange={handleFileChange}
                 />

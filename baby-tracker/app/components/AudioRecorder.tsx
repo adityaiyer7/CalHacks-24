@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import AudioCaptureButton from './AudioCaptureButton';
 import { AIVoiceChatBotProps } from '../types';
+
 export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotProps) {
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+    const [audioURL, setAudioURL] = useState<string | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
-
 
     const startRecording = async () => {
         try {
@@ -35,37 +36,34 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
 
     const stopRecording = () => {
         mediaRecorderRef.current?.stop();
-        // Stop all audio tracks of the media stream
         mediaRecorderRef.current?.stream.getTracks().forEach(track => track.stop());
         setIsRecording(false);
         handleAIBotRecording && handleAIBotRecording();
+        handleUpload();
     };
 
     const convertToWav = async (webmBlob: Blob) => {
-        // Convert the webmBlob to an array buffer
         const arrayBuffer = await webmBlob.arrayBuffer();
         const audioContext = new AudioContext();
         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-        // Create an empty buffer with the same length as the audio data
         const offlineContext = new OfflineAudioContext(
             audioBuffer.numberOfChannels,
             audioBuffer.length,
             audioBuffer.sampleRate
         );
 
-        // Create a buffer source and set its buffer
         const bufferSource = offlineContext.createBufferSource();
         bufferSource.buffer = audioBuffer;
         bufferSource.connect(offlineContext.destination);
         bufferSource.start();
 
-        // Render the audio data to an array buffer
         const renderedBuffer = await offlineContext.startRendering();
-
-        // Convert the rendered buffer to a .wav file
         const wavBlob = audioBufferToWav(renderedBuffer);
         setAudioBlob(wavBlob);
+
+        const url = URL.createObjectURL(wavBlob);
+        setAudioURL(url);
     };
 
     const audioBufferToWav = (buffer: AudioBuffer) => {
@@ -74,22 +72,20 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
         const bufferArray = new ArrayBuffer(length);
         const view = new DataView(bufferArray);
 
-        // Write WAV file headers
         writeString(view, 0, 'RIFF');
         view.setUint32(4, length - 8, true);
         writeString(view, 8, 'WAVE');
         writeString(view, 12, 'fmt ');
-        view.setUint32(16, 16, true); // PCM format chunk length
-        view.setUint16(20, 1, true); // Audio format (1 = PCM)
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
         view.setUint16(22, numOfChannels, true);
         view.setUint32(24, buffer.sampleRate, true);
         view.setUint32(28, buffer.sampleRate * 4, true);
         view.setUint16(32, numOfChannels * 2, true);
-        view.setUint16(34, 16, true); // Bits per sample
+        view.setUint16(34, 16, true);
         writeString(view, 36, 'data');
         view.setUint32(40, length - 44, true);
 
-        // Write PCM data
         let offset = 44;
         for (let i = 0; i < buffer.length; i++) {
             for (let channel = 0; channel < numOfChannels; channel++) {
@@ -112,32 +108,43 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
     const handleUpload = async () => {
         if (audioBlob) {
             const formData = new FormData();
-            formData.append('audio', audioBlob, 'recording.wav');
-
+            formData.append('file', audioBlob, 'recording.wav');
+    
             try {
-                const response = await fetch('/api/upload-audio', {
+                const response = await fetch('http://127.0.0.1:8000/transcribe', {
                     method: 'POST',
                     body: formData,
                 });
-
+    
                 if (!response.ok) {
                     throw new Error('Failed to upload audio');
                 }
-
-                console.log('Audio uploaded successfully');
+    
+                const data = await response.json();
+                console.log('Transcription:', data.transcription);
+                console.log('Creation Timestamp:', data.creation_time_stamp);
             } catch (error) {
                 console.error('Error uploading audio:', error);
             }
         }
     };
 
-    useEffect(() => {
-        console.log('Audio blob:', audioBlob);
-    }, [audioBlob]);
+    const downloadAudio = () => {
+        if (audioURL) {
+            const link = document.createElement('a');
+            link.href = audioURL;
+            link.download = 'recording.wav'; // Name of the file to be downloaded
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
 
     useEffect(() => {
-        console.log('isRecording', isRecording);
-    }, [isRecording]);
+        if (audioURL) {
+            downloadAudio();
+        }
+    }, [audioURL]);
 
     return (
         <div className="flex flex-col items-center">
@@ -145,7 +152,6 @@ export default function AudioRecorder({ handleAIBotRecording }: AIVoiceChatBotPr
                 onClick={isRecording ? stopRecording : startRecording} 
                 isRecording={isRecording} 
             />
-        
         </div>
     );
 }

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { AIVoiceChatBotProps } from '../types';
+import DataEntryBar from './DataEntryBar';
+import { useNavContext } from '../context/NavContext';
 
-const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
-    const [isExpanded, setIsExpanded] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState<string>('Home');
+const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const { selectedNav, setSelectedNav } = useNavContext();
+    const [isAIWidgetOpen, setIsAIWidgetOpen] = useState(false);
 
     const router = useRouter();
-    
     const navItems = [
         { name: 'Home', icon: '/images/home.png', alt: 'Home Icon', route: '/dashboard' },
         { name: 'Profile', icon: '/images/baby.png', alt: 'Profile Icon', route: '/profile' },
@@ -19,9 +21,19 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
     ];
 
     const handleNavItemSelection = (name: string, route: string) => {
-        setSelectedItem(name);
+        setSelectedNav(name); // Updated to setSelectedNav
+        handleSelectedTab && handleSelectedTab(name);
         router.push(route);
     }
+
+
+    const handleAIWidgetClick = () => {
+        setIsAIWidgetOpen(!isAIWidgetOpen);
+        handleAIBotClick && handleAIBotClick();
+    }
+
+
+
 
     return (
         <div className={`${isExpanded ? 'md:w-80 w-16' : 'w-16 md:w-24'} flex flex-col justify-between items-center bg-background p-4 h-screen`}>
@@ -66,7 +78,7 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
                     {navItems.map((item) => (
                         <li
                             key={item.name}
-                            className={`flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-[50px] shadow-lg p-2 my-2 ${selectedItem === item.name ? 'border-2 border-primary' : ''
+                            className={`flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-[50px] shadow-lg p-2 my-2 ${selectedNav === item.name ? 'border-2 border-primary' : ''
                                 }`}
                             onClick={() => handleNavItemSelection(item.name, item.route)}
                         >
@@ -88,8 +100,8 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
 
 
             {/* AI Widget */}
-            <div className='flex flex-row mb-5 md:mb-0 justify-center items-center bg-foreground rounded-full shadow-lg p-2 hover:cursor-pointer hover:opacity-70 hover:animate-bounce' onClick={handleAIBotClick}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={35} height={35} color={"#27595A"} fill={"none"}>
+            <div className="relative flex flex-row mb-5 md:mb-0 justify-center items-center rounded-full shadow-lg p-2 hover:cursor-pointer hover:opacity-70">
+                <svg xmlns="http://www.w3.org/2000/svg" className='hover:animate-wiggle' viewBox="0 0 24 24" width={35} height={35} color={"#FFFFFF"} fill={"none"} onClick={handleAIWidgetClick}>
                     <path d="M4 15.5C2.89543 15.5 2 14.6046 2 13.5C2 12.3954 2.89543 11.5 4 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M20 15.5C21.1046 15.5 22 14.6046 22 13.5C22 12.3954 21.1046 11.5 20 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M7 7L7 4" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -101,8 +113,16 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
                     <path d="M9.00896 11H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M15.009 11H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
+                {isAIWidgetOpen && selectedNav !== 'Home' && selectedNav !== 'History' && (
+                    <div className="absolute left-[700%] ml-4 top-3 transform translate-y-[-50%] w-[500px] md:w-[800px]">
+                        <DataEntryBar handleAIBotRecording={() => { }} />
+                    </div>
+                )}
 
             </div>
+
+
+
         </div>
     );
 };
