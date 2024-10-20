@@ -24,7 +24,7 @@ const Navbar = ({ handleSelectedTab}: AIVoiceChatBotProps) => {
     ];
 
     const handleNavItemSelection = (name: string, route: string) => {
-        setSelectedNav(name); // Updated to setSelectedNav
+        setSelectedNav(name);
         handleSelectedTab && handleSelectedTab(name);
         router.push(route);
     }
