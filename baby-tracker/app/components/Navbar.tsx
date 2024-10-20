@@ -12,6 +12,10 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
         router.push("/"); // Navigate to Login
     };
 
+    const handleProfileClick = () => {
+        router.push("/profile"); // Navigate to Login
+    };
+
     const handleReportClick = () => {
         router.push("/report"); // Navigate to Login
     };
@@ -72,7 +76,10 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
                         </div>
                         {isExpanded && <a className="px-2 hidden md:block text-lg font-semibold">Home</a>}
                     </li>
-                    <li className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2">
+                    <li 
+                        className="flex flex-row items-center hover:opacity-70 hover:cursor-pointer hover:animate-wiggle rounded-full shadow-lg p-2 my-2"
+                        onClick={handleProfileClick}
+                    >
                         <div className="w-8 h-8">
                             <Image
                                 src="/images/baby.png"
