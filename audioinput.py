@@ -1,30 +1,37 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File
+from app import router
 import requests
 from deepgram import DeepgramClient
 import uvicorn
-from google.cloud import vision 
+import json
+import time
 import google.generativeai as genai
+from text_filter import post_processing
+from db_crud import update_food
+
+
+# load Deepgram API key
 
 load_dotenv()
 
 # Load Deepgram API key and set up server
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
-FILE_PATH = "tempaudio/test.wav"
 
-app = FastAPI()
+FILE_PATH = "tempaudio/Record (online-voice-recorder.com).wav"
+baby_id = os.get("BABYID")
 
-# Transcribe audio files to text; return transcription and creation time stamp
-@app.post("/transcribe")
+
+@router.post("/transcribe")
 def transcribe():
+   print("I entered here")
    # Define the URL and headers
    url = "https://api.deepgram.com/v1/listen"
    headers = {
       "Authorization": f"Token {DEEPGRAM_API_KEY}",
       "Content-Type": "audio/wav"
    }
-
    # Open and send the audio file
    with open(FILE_PATH, "rb") as audio_file:
       response = requests.post(url, headers=headers, data=audio_file)
@@ -40,13 +47,12 @@ def transcribe():
    # Return response
    return transcription, creation_time_stamp
 
-
 # Getting Gemini API key
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 # Get image and process foods and amounts eaten
-@app.post("/processimage")
+@router.post("/processimage")
 def processimage():
    # Choosing model
    model = genai.GenerativeModel("gemini-1.5-pro")
@@ -59,12 +65,18 @@ def processimage():
    afterimg = genai.upload_file(AFTERIMG_FILE_PATH)
 
    #prompt = "What are the two pictures showing?"
-   prompt = """Analyze these two images of a baby's plate of food. The first image shows the plate before eating, and the second image shows it after. Identify the foods and estimate how much was eaten. Provide a rating for each food from 1 to 5, where 1 means 'didn't eat any' and 5 means 'finished it completely.' Return the result as a dictionary where each food item is a key and its corresponding rating is the value."""
+   prompt = """Analyze two images of a baby's plate of food: the first shows the plate before eating, and the second shows it after. 
+   Identify each food item and estimate how much was eaten, assigning a rating from 1 to 5 for each, where 1 means 'none eaten' and 5 means 'completely finished.' 
+   Return the result as a clean JSON object without any escape characters or extra formatting. The output should follow this format exactly: {"black beans": 5, "enchiladas": 3, "eggs": 2}. 
+   Do not add any extra characters or line breaks, and avoid using escape characters in the JSON format."""
 
    result = model.generate_content(
       [prompt, beforeimg, afterimg]
    )
-   return result.text
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+   intm_result = result.text
+   result = json.loads(intm_result)
+   for food, food_score in result.items():
+      update_food(baby_id, food, food_score)
+   print("fooddb has been updated")
+   #processed_result = post_processing(intm_result)
+   return result
