@@ -13,7 +13,7 @@
     border-top: none;
     border-left: 28px solid transparent;
     border-right: 28px solid transparent;
-    border-bottom: 40px solid #e89eb8;
+    border-bottom: 40px solid #FCE7CA;
     bottom: 209px;
     left: 156px;
 }
@@ -23,21 +23,22 @@
     position: absolute;
     height: 20px;
     width: 18px;
-    background: yellow;
+    background: #FCE7CA;
     left: 41px;
     bottom: 237px;
-    border-top: 6px solid rgb(243, 117, 77);
+    /* border-top: 6px solid rgb(243, 117, 77);
     border-left: 6px solid rgb(243, 117, 77);
-    border-right: 6px solid rgb(243, 117, 77);
+    border-right: 6px solid rgb(243, 117, 77); */
     border-radius: 100px 100px 0 0;
 }
 
 
 .bottle-neck {
     width:65px;
-    height: 14px;
-    background: orange;
-    border: 3px solid rgb(243, 117, 77);
+    height: 16px;
+    background: #FACC15;
+    border: 3px solid #FACC15;
+    border-radius: 5px;
     left: 149px;
     bottom: 188px;
 }
@@ -47,19 +48,20 @@
     height: 80%;
     left: 132px;
     background: white;
-    border-radius: 25% 25% 0 0;
+    border-radius: 25% 25% 10% 10%;
+    border: 3px solid #FACC15;
 }
 
 .milk-level {
-    width: 95%; /* Keep this for the main width */
+    width: 88%; /* Keep this for the main width */
     height: 40px; /* This will be your current height */
     max-height: 100%; /* Keep this as is to limit the height */
-    background-color: #ced0c8; /* Change this to the desired milk color */
+    background-color: #B1F0EF; /* Change this to the desired milk color */
     position: absolute;
-    bottom: 0; /* Align to bottom of the bottle body */
+    bottom: 3px; /* Align to bottom of the bottle body */
     left: 50%; /* Center it horizontally */
     transform: translateX(-50%); /* Adjust position to center */
-    border-radius: 20px 20px 0 0; /* Rounded top corners */
+    border-radius: 16px 16px 10px 10px; /* Rounded top corners */
 }
 
 .line {
