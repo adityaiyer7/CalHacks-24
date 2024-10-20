@@ -9,6 +9,7 @@ router = APIRouter()
 
 import audioinput
 import main
+import visualizations
 
 
 app.add_middleware(

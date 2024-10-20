@@ -27,6 +27,9 @@ food_data = [
     {'baby_id': babyid, 'food': 'Pureed spinach', 'food_score': 3, 'log_date': '2024-09-26 00:00:00'},
     {'baby_id': babyid, 'food': 'Pureed pumpkin', 'food_score': 4, 'log_date': '2024-10-06 00:00:00'},
     {'baby_id': babyid, 'food': 'Mashed avocado', 'food_score': 5, 'log_date': '2024-10-16 00:00:00'},
+    {'baby_id': babyid, 'food': 'Mashed avocado', 'food_score': 5, 'log_date': '2024-10-20 00:00:00'},
+    {'baby_id': babyid, 'food': 'Mashed bananas', 'food_score': 5, 'log_date': '2024-10-20 00:00:00'},
+    {'baby_id': babyid, 'food': 'Pureed apples', 'food_score': 4, 'log_date': '2024-10-20 00:00:00'}
 ]
 
 
