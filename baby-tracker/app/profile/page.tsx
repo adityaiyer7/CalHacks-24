@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import Navbar from "../components/Navbar";
 import PDFReportContent from "../components/PDFReportContent";
+import DataEntryBar from "../components/DataEntryBar";
 
 export default function Profile() {
     const [isAIBotOpen, setIsAIBotOpen] = useState(false);
@@ -59,10 +60,6 @@ export default function Profile() {
         doc.save("AI_Report.pdf");
     };
 
-
-    useEffect(() => {
-        console.log("isRecording", isRecording);
-    }, [isRecording]);
 
     return (
         <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">
@@ -144,8 +141,8 @@ export default function Profile() {
                         </div>
                     </div>
 
-
                 </div>
+
             </div>
         </div>
     );
