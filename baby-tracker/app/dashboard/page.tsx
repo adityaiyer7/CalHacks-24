@@ -4,10 +4,16 @@ import Navbar from "../components/Navbar";
 import TabSwitch from "../components/TabSwitch";
 import DataEntryBar from "../components/DataEntryBar";
 import AudioRecorder from "../components/AudioRecorder";
+import { useTabContext } from '../context/TabContext';
+import Feed from "../components/Feed";
+import Sleep from "../components/Sleep";
+import Growth from "../components/Growth";
+import DropdownButton from '../components/DropdownButton';
 
 export default function Dashboard() {
   const [isAIBotOpen, setIsAIBotOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const { activeTab, setActiveTab } = useTabContext();
   const handleAIBotClick = () => {
     setIsAIBotOpen(!isAIBotOpen);
   };
@@ -23,27 +29,21 @@ export default function Dashboard() {
   return (
     <div className="flex flex-row justify-start items-start overflow-y-hidden md:pb-0 pb-32">
       <div className="flex flex-row justify-stretch items-stretch w-full h-screen">
-        <Navbar handleAIBotClick={handleAIBotClick} />
+        <Navbar/>
         <div className="flex flex-col justify-between items-center bg-foreground rounded-l-[50px] roun w-full h-auto">
           {/*Chart View Selection*/}
           <TabSwitch />
-          {isAIBotOpen && (
-            <div className="flex justify-center items-center hover:animate-wiggle hover:opacity-70 hover:cursor-pointer">
-              {/*Icon indicating current state of AI Voice Chat Bot*/}
-              <div className="relative">
-                <div className="absolute left-[32px;] bottom-[-22px] z-10">
-                  <AudioRecorder handleAIBotRecording={handleRecording} />
-                </div>
-              </div>
-              <button onClick={handleRecording}>
-                <img
-                  src="/images/AIVoice.gif"
-                  alt="AI Voice Icon"
-                  className="w-1/2 h-auto"
-                />
-              </button>
+          <div className='flex justify-end items-center w-3/4 h-auto'>
+                <DropdownButton />
             </div>
-          )}
+          <div className="w-2/3 flex flex-col justify-center items-center">
+            {/*Visualizations Container*/}
+            <div className="w-full h-auto flex justify-between items-center">
+              { activeTab === "feeding" && <Feed/> }
+              { activeTab === "sleep" && <Sleep/> }
+              { activeTab === "growth" && <Growth/> }
+            </div>
+          </div>
           {/*AI Bot*/}
           <div className="flex flex-row justify-center items-center w-11/12 md:w-3/4 my-5">
             <DataEntryBar handleAIBotRecording={handleRecording} />

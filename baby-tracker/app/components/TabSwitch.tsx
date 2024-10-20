@@ -12,9 +12,6 @@ const TabSwitch: React.FC = () => {
         { id: 'growth', label: 'Growth', icon: '/images/growth-chart.png', alt: 'Growth Icon' },
     ];
 
-    useEffect(() => {
-        console.log(activeTab)
-    }, [activeTab])
 
     return (
         <div className="grid grid-cols-4 gap-5 bg-background rounded-[50px] w-6/12 my-10">
