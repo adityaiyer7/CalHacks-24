@@ -170,10 +170,10 @@ const Home: React.FC = () => {
         <p>BabyBytes &copy; CalHack{new Date().getFullYear()}</p>
         <p>All rights reserved.</p>
         <div className="flex justify-center gap-5 mt-5">
-          <FaFacebookF className="hover:text-[#FCC035] cursor-pointer" />
-          <FaInstagram className="hover:text-[#FCC035] cursor-pointer" />
-          <FaLinkedinIn className="hover:text-[#FCC035] cursor-pointer" />
-          <FaDiscord className="hover:text-[#FCC035] cursor-pointer" />
+          <FaFacebookF className="hover:text-[#FCC035] cursor-pointer text-2xl" />
+          <FaInstagram className="hover:text-[#FCC035] cursor-pointer text-2xl" />
+          <FaLinkedinIn className="hover:text-[#FCC035] cursor-pointer text-2xl" />
+          <FaDiscord className="hover:text-[#FCC035] cursor-pointer text-2xl" />
         </div>
       </footer>
     </div>

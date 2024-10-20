@@ -40,12 +40,12 @@ const Feed = () => {
                 {/* Circular Progress Chart */}
                 <div className='flex flex-col justify-center items-center w-full mt-20 mx-2'>
                     <svg width="200" height="200">
-                        <circle cx="100" cy="100" r="90" stroke="#FACC15" strokeWidth="20" fill="none" />
+                        <circle cx="100" cy="100" r="90" stroke="#B0C3BF" strokeWidth="20" fill="none" />
                         <circle
                             cx="100"
                             cy="100"
                             r="90"
-                            stroke="#27595A"
+                            stroke="#FACC15"
                             strokeWidth="20"
                             fill="none"
                             strokeDasharray="628" // Circumference of the outer circle
