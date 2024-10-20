@@ -41,7 +41,7 @@ const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => 
                 {/* Logo and App name */}
                 <div id="app-identity" className="flex flex-row justify-evenly items-center mb-4">
                     {/* <Image src={"/images/baby.png"} alt="app logo" className="rounded-full" width={50} height={50} /> */}
-                    {isExpanded && <h1 className="text-3xl text-strongText mt-5 mr-12 hidden md:block">App Name</h1>}
+                    {isExpanded && <h1 className="text-3xl animate-wiggle text-[#B1F0EF] mt-5 mr-12 hidden md:block">BabyBytes</h1>}
                 </div>
 
                 {/*Collapse/Expand Icons*/}
@@ -66,8 +66,8 @@ const Navbar = ({ handleAIBotClick, handleSelectedTab}: AIVoiceChatBotProps) => 
             <div className="text-center">
                 <Image src={"/images/baby.png"} alt="profile picture" className="rounded-full w-32 h-32 mx-auto" width={250} height={50} />
                 {isExpanded && (
-                    <a className="mt-2 text-strongText text-2xl hidden md:block">
-                        Baby Name
+                    <a className="mt-2 text-yellow-400 text-2xl hidden md:block">
+                        Bytes Hacker
                     </a>
                 )}
             </div>

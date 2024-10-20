@@ -116,20 +116,20 @@ export default function Profile() {
 
                         {/* Baby Information */}
                         <div className="text-center">
-                            <h2 className="text-xl text-yellow-400 font-bold mb-2">Baby Name</h2>
-                            <p className="text-white">Birthday: January 1, 2023</p>
-                            <p className="text-white">Gender: Male</p>
-                            <p className="text-white">Weight: 15 lbs</p>
-                            <p className="text-gwhite">Height: 24 inches</p>
+                            <h2 className="text-xl text-yellow-400 font-bold mb-2">Bytes Hacker</h2>
+                            <p className="text-white">😎Male</p>
+                            <p className="text-white">🎂October 18, 2023</p>
+                            <p className="text-white">💪15 lbs</p>
+                            <p className="text-gwhite">📏24 inches</p>
                         </div>
 
                         {/* Milestones, Health Info, etc. */}
                         <div className="mt-4">
                             <h3 className="text-lg text-foreground underline font-semibold mb-2">Milestones</h3>
                             <ul className="list-disc list-inside text-white">
-                                <li>First smile: March 1, 2023</li>
-                                <li>First word: July 15, 2023</li>
-                                <li>First steps: September 10, 2023</li>
+                                <li>First smile: March 1, 2024</li>
+                                <li>First word: July 15, 2024</li>
+                                <li>First steps: September 10, 2024</li>
                             </ul>
                         </div>
 

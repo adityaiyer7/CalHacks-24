@@ -15,9 +15,18 @@ const Message = ({ message, isBot }: MessageProps) => {
                         className="rounded-lg mx-2"
                     />
                 )}
-                <div className={`text-base text-black  shadow rounded-[50px] py-4 px-6 ${isBot ? 'bg-[#ffb3d4]' : 'text-white bg-[#27595A]'} flex items-center`}>
+                <div className={`text-base text-black  shadow rounded-[50px] py-4 px-6 ${isBot ? 'bg-[#ffb3d4]' : 'bg-[#FBD2AB]'} flex items-center`}>
                     <div>{message}</div>
                 </div>
+                {!isBot && (
+                    <Image
+                        src="/images/logo.png" // Replace with the actual user avatar image path
+                        alt="User Message Icon"
+                        width={40}
+                        height={30}
+                        className="rounded-full mx-2"
+                    />
+                )}
             </div>
         </div>
     );
