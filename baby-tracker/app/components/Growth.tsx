@@ -17,7 +17,8 @@ const Growth: React.FC = () => {
         </div>
 
         <div className="flex flex-col items-center mt-4 md:mt-0">
-          <h2 className="text-xl font-semibold mb-4 md:mb-0">Growth Tracker</h2>
+          {/* <h2 className="text-xl font-semibold mb-4 md:mb-0">Growth Tracker</h2> */}
+          <h1 className="text-3xl font-bold text-gray-900 mb-5">Growth Tracker</h1>
           <Image
             src="/images/baby-growth.png" 
             alt="Baby Growth"

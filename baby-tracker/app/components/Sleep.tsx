@@ -47,7 +47,8 @@ const Sleep = () => {
                 </div>
 
                 {/* Sleep Circular Chart */}
-                <div className='w-auto h-auto flex justify-center items-center mx-5'>
+                <div className='w-auto h-auto flex flex-col justify-center items-center mx-5'>
+                <h1 className="text-3xl font-bold text-gray-900 mb-5">Sleep Tracker</h1>
                     <svg width="300" height="300">
                         <circle cx="150" cy="150" r="100" stroke="#B0C3BF" strokeWidth="20" fill="none" />
                         <circle
