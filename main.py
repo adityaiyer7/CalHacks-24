@@ -43,7 +43,6 @@ def main(baby_id):
     if bool_marker(gemini_dict, 'sleep'):
         sleep_updater(baby_id, gemini_dict)
 
-
 email = 'batman@gothamcity.com'
 user_id = get_user_id_by_email(email)
 baby_id = get_baby_ids_by_user_id(user_id)
