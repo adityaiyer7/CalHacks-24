@@ -1,4 +1,6 @@
 import asyncio
+import json
+import aiofiles
 import base64
 import datetime
 import os
@@ -55,4 +57,50 @@ async def main() -> None:
 
 asyncio.run(main())
 
+## Defining WebSocketInterface class to handle WebSocket connection and event callbacks ##
 
+class WebSocketInterface:
+    def __init__(self):
+        self.socket = None
+        self.user_stream = None
+        self.evi_stream = None
+
+    def set_socket(self, socket):
+        self.socket = socket
+
+    async def on_open(self):
+        # Called when WebSocket connection is established
+        assistant_input = {
+        "type": "assistant_input",
+        "text": "What's on your mind today?",
+        }
+        self.socket.send(assistant_input)
+
+    async def on_message(self, message):
+
+        # async def play_audio(self, audio_data_base64):
+        #     # Decode the base64-encoded audio data
+        #     decoded_audio = base64.b64decode(audio_data_base64)
+    
+        #     # Convert the raw byte data to a NumPy array (assuming int16 PCM audio format)
+        #     audio_array = np.frombuffer(decoded_audio, dtype=np.int16)
+
+        #     # Play the audio using sounddevice
+        #     fs = 16000  # Set the sample rate (check what Hume's API uses)
+        #     sd.play(audio_array, samplerate=fs)
+
+        message_data = json.loads(message)
+            
+        if message_data["type"] == "Audio Output":
+            audio_data_base64 = message_data.get("audio")
+            await self.play_audio(audio_data_base64)
+
+    async def on_close(self):
+        assistant_input = {
+        "type": "assistant_input",
+        "text": "See you later!",
+        }
+        self.socket.send(assistant_input)
+
+    async def on_error(self, error):
+        print(f"WebSocket error: {error}")
