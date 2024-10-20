@@ -108,6 +108,21 @@ try:
         cursor.execute(create_sleep_table_query)
         print("Table 'sleep' created successfully")
 
+
+        create_food_table_query = '''
+        CREATE TABLE IF NOT EXISTS food (
+            log_id BIGINT AUTO_INCREMENT,
+            baby_id BIGINT,
+            food VARCHAR(255),  -- Use VARCHAR or TEXT for strings
+            food_score INT,
+            log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (log_id)
+        );
+        '''
+        # Execute the query to create the 'sleep' table
+        cursor.execute(create_food_table_query)
+        print("Table 'food' created successfully")
+
         # Commit changes
         connection.commit()
 

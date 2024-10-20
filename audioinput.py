@@ -9,6 +9,7 @@ import json
 import time
 import google.generativeai as genai
 from text_filter import post_processing
+from db_crud import update_food
 
 
 # load Deepgram API key
@@ -19,7 +20,7 @@ load_dotenv()
 DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
 
 FILE_PATH = "tempaudio/Record (online-voice-recorder.com).wav"
-
+baby_id = os.get("BABYID")
 
 
 @router.post("/transcribe")
@@ -74,7 +75,8 @@ def processimage():
    )
    intm_result = result.text
    result = json.loads(intm_result)
+   for food, food_score in result.items():
+      update_food(baby_id, food, food_score)
+   print("fooddb has been updated")
    #processed_result = post_processing(intm_result)
    return result
-
-)

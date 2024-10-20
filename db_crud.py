@@ -257,6 +257,53 @@ def update_sleep(baby_id, sleep_duration, timestamp=None):
             connection.close()
             print("Connection to SingleStore closed")
 
+def update_food(baby_id, food, food_score, timestamp=None):
+    try:
+        # Establish a connection to SingleStore
+        connection = mysql.connector.connect(
+            host=host,
+            port=port,
+            user=username,
+            password=password,
+            database=database
+        )
+
+        if connection.is_connected():
+            print("Connected to SingleStore database")
+
+            # Create a new cursor
+            cursor = connection.cursor()
+
+            # Check if a timestamp was provided
+            if timestamp is None:
+                # If no timestamp provided, use the default query (let the DB use the current timestamp)
+                insert_food_query = '''
+                    INSERT INTO food (baby_id, food, food_score)
+                    VALUES (%s, %s, %s);
+                '''
+                food_data = (baby_id, food, food_score)
+            else:
+                # If a timestamp is provided, include it in the query
+                insert_food_query = '''
+                    INSERT INTO food (baby_id, food, food_score, log_date)
+                    VALUES (%s, %s, %s, %s);
+                '''
+                food_data = (baby_id, food, food_score, timestamp)
+
+            # Execute the query
+            cursor.execute(insert_food_query, food_data)
+
+            # Commit the changes
+            connection.commit()
+            print("Food data added successfully")
+
+    except Error as e:
+        print(f"Error: {e}")
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("Connection to SingleStore closed")
 
 def extract_baby_id_from_name(user_id, baby_name):
 
