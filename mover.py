@@ -2,8 +2,8 @@ import shutil
 import os
 
 # Specify the source folder and destination folder with absolute paths
-source_folder = '/Users/mishtu/Downloads'
-destination_folder = '/Users/mishtu/Documents/projects/CalHacks-24/tempaudio'  # Update this to the full path of your project
+source_folder = '/Users/adityaiyer/Downloads'
+destination_folder = 'tempaudio'  # Update this to the full path of your project
 
 
 # Create destination folder if it doesn't exist
