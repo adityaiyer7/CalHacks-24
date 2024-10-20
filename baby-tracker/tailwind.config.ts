@@ -14,6 +14,7 @@ const config: Config = {
         strongText: "var(--strong-text)",
         gradientPrimary: "var(--gradient-primary)",
         gradientSecondary: "var(--gradient-secondary)",
+        
       },
       backdropBlur: {
         '50px': '50px',
