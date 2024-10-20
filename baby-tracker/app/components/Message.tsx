@@ -10,8 +10,8 @@ const Message = ({ message, isBot }: MessageProps) => {
                     <Image
                         src="/images/chat-bot.jpeg"
                         alt="Chat Bot Message Icon"
-                        width={40}
-                        height={40}
+                        width={50}
+                        height={50}
                         className="rounded-lg shadow-md mx-2"
                     />
                 )}

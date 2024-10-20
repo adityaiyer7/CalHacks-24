@@ -7,7 +7,7 @@ const Navbar = ({ handleAIBotClick }: AIVoiceChatBotProps) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
     const [selectedItem, setSelectedItem] = React.useState<string>('Home');
 
-    const router = useRouter()
+    const router = useRouter();
 ;
     const navItems = [
         { name: 'Home', icon: '/images/home.png', alt: 'Home Icon', route: '/dashboard' },

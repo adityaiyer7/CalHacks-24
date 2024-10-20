@@ -5,7 +5,7 @@ interface AudioCaptureButtonProps {
   isRecording: boolean; // To determine the button's state
 }
 
-const AudioCaptureButton: React.FC<AudioCaptureButtonProps> = ({ onClick, isRecording }) => {
+const AudioCaptureButton: React.FC<AudioCaptureButtonProps> = ({ onClick }) => {
   return (
     <div className="flex justify-center items-center mx-2 hover:animate-wiggle">
       <div className="w-[45px] h-[45px] relative cursor-pointer" tabIndex={0} style={{ filter: 'brightness(0.8)' }} onClick={onClick}>

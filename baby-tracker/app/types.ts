@@ -7,3 +7,8 @@ export type MessageProps = {
     message: string;
     isBot: boolean;
 }
+
+export type AudioCaptureButtonProps = {
+    onClick: () => void;
+    isRecording: boolean;
+}

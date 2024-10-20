@@ -1,5 +1,4 @@
 import React from 'react'
-import AudioCaptureButton from "../components/AudioCaptureButton";
 import Image from 'next/image';
 import ImageUpload from './ImageUpload';
 import { AIVoiceChatBotProps } from '../types';
