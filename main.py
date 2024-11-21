@@ -74,5 +74,8 @@ def main_caller():
     # baby_id = get_baby_ids_by_user_id(user_id)  
     main(baby_id)
     requests.post("http://127.0.0.1:8000/generate_sleep_graph_weekly")
-
+    requests.post("http://127.0.0.1:8000/genreate_sleep_graph")
+    requests.post("http://127.0.0.1:8000/generate_food_graph")
+    requests.post("http://127.0.0.1:8000/genreate_weight_graph")
+    requests.post("http://127.0.0.1:8000/genreate_height_graph")
 

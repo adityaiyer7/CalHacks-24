@@ -2,12 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 
 const Growth: React.FC = () => {
+    const [growthPlot, setGrowthPlot] = React.useState('/images/height_graph.png')
+    const [weightPlot, setWeightPlot] = React.useState('/images/weight_graph.png')
+    setTimeout(() => {
+        setGrowthPlot('/images/height_graph.png')
+        setWeightPlot('/images/weight_graph.png')
+    }, 5000);
     return (
         <div className="p-4 text-[#27595A] rounded-lg flex flex-col md:flex-row justify-between items-center">
             <div className="flex flex-col md:flex-row justify-center items-center">
                 <div className="flex flex-col items-center mr-4 rounded-lg">
                     <Image
-                        src={'/images/weight_graph.png'}
+                        src={growthPlot}
                         alt="Weight Chart"
                         width={500}
                         height={500}

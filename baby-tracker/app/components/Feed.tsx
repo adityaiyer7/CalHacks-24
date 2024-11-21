@@ -13,6 +13,11 @@ const Feed = () => {
     // Calculate stroke-dashoffset for the circular chart
     const strokeDashoffset = (1 - progressPercentage / 100) * 628; // Circumference = 2 * π * 100
 
+    const [foodPlot, setFoodPlot] = React.useState('/images/food_graph.png')
+    setTimeout(() => {
+        setFoodPlot('/images/food_graph.png');
+    }, 5000);
+
     return (
         <div className='flex flex-col items-center w-full mb-20'>
             <h1 className="text-3xl font-bold text-gray-900 mb-5">Daily Food Digestion Progress</h1>
@@ -32,7 +37,7 @@ const Feed = () => {
 
                 {/* Feed Graph */}
                 <div className='flex justify-center items-center w-full mx-2'>
-                    <Image src='/images/food_graph.png' alt='Feed Graph' width={500} height={500} />
+                    <Image src={foodPlot} alt='Feed Graph' width={500} height={500} />
                 </div>
 
 
